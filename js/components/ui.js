@@ -511,12 +511,9 @@ window.SasyTix = window.SasyTix || {};
         <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
         <aside class="app-sidebar" id="app-sidebar">
           <div class="sidebar-brand">
-            <a href="${root}pages/${role}/dashboard.html" class="brand-link">
-              <div class="brand-badge-icon">${icon('anchor', 18)}</div>
-              <div class="brand-text">
-                <div class="brand-name">Sasy.Tix</div>
-                <div class="brand-tag">${portalLabel}</div>
-              </div>
+            <a href="${root}pages/${role}/dashboard.html" class="brand-link" aria-label="Sasy.Tix ${portalLabel}">
+              <img src="${root}assets/logos/logo.png" alt="Sasytix.com" class="sidebar-brand-img">
+              <img src="${root}assets/logos/favicon.png" alt="Sasy.Tix" class="sidebar-brand-favicon">
             </a>
           </div>
           <nav class="sidebar-nav" aria-label="${portalLabel} navigation">

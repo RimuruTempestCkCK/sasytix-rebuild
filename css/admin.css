@@ -200,6 +200,29 @@ body:not(.public-body) button > svg {
   min-width: 0;
 }
 
+.sidebar-brand-img {
+  height: 28px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  display: block;
+}
+
+.sidebar-brand-favicon {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+  display: none;
+}
+
+.app-shell.sidebar-collapsed .sidebar-brand-img {
+  display: none;
+}
+
+.app-shell.sidebar-collapsed .sidebar-brand-favicon {
+  display: block;
+}
+
 .brand-badge-icon {
   background: var(--primary);
   color: #ffffff;
