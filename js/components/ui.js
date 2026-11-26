@@ -80,54 +80,7 @@ window.SasyTix = window.SasyTix || {};
   }
 
   function renderDemoBar() {
-    const existing = document.getElementById('demo-bar-mount');
-    if (!existing) return;
-    const state = window.SasyTix.Storage.loadState();
-    const user = window.SasyTix.Storage.getCurrentUser(state);
-    const root = getRootPrefix();
-    const role = user ? user.role : 'guest';
-
-    existing.innerHTML = `
-      <div class="demo-bar" aria-label="Demo role switcher">
-        <div class="demo-bar-inner">
-          <div class="demo-role-pills">
-            <span style="font-weight:700; opacity:0.85;">Demo:</span>
-            <button type="button" class="demo-pill ${role === 'buyer' ? 'is-active' : ''}" data-demo-role="buyer">Buyer</button>
-            <button type="button" class="demo-pill ${role === 'admin' ? 'is-active' : ''}" data-demo-role="admin">Admin</button>
-            <button type="button" class="demo-pill ${role === 'owner' ? 'is-active' : ''}" data-demo-role="owner">Owner</button>
-            <button type="button" class="demo-pill" id="btn-reset-demo" title="Reset Demo Data">Reset</button>
-          </div>
-        </div>
-      </div>
-    `;
-
-    existing.querySelectorAll('[data-demo-role]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetRole = btn.getAttribute('data-demo-role');
-        const st = window.SasyTix.Storage.loadState();
-        const targetUser = st.users.find(u => u.role === targetRole);
-        if (targetUser) {
-          st.currentUserId = targetUser.id;
-          window.SasyTix.Storage.saveState(st);
-          if (targetRole === 'admin') {
-            window.location.href = `${root}pages/admin/dashboard.html`;
-          } else if (targetRole === 'owner') {
-            window.location.href = `${root}pages/owner/dashboard.html`;
-          } else {
-            window.location.href = `${root}index.html`;
-          }
-        }
-      });
-    });
-
-    const resetBtn = document.getElementById('btn-reset-demo');
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        window.SasyTix.Storage.resetDemoData();
-        showToast('Data demo berhasil direset ke kondisi awal.', 'success');
-        setTimeout(() => window.location.reload(), 600);
-      });
-    }
+    // Demo switcher permanently removed
   }
 
   function renderPublicHeader(activeKey) {

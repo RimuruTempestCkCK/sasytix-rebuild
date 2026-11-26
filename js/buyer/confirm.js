@@ -2,7 +2,6 @@
   const { Storage, UI } = window.SasyTix;
 
   document.addEventListener('DOMContentLoaded', () => {
-    UI.renderDemoBar();
     UI.renderPublicHeader('search');
     UI.renderPublicFooter();
 

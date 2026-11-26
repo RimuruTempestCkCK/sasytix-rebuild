@@ -2,7 +2,6 @@
   const { Storage, UI, Auth } = window.SasyTix;
 
   document.addEventListener('DOMContentLoaded', () => {
-    UI.renderDemoBar();
     UI.renderPublicHeader('profile');
     UI.renderPublicFooter();
 

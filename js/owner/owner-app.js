@@ -11,7 +11,6 @@
       admins: 'Admin Management'
     };
 
-    UI.renderDemoBar();
     UI.renderDashboardShell('owner', page, titles[page] || 'Owner');
 
     const root = document.getElementById('owner-main-content');

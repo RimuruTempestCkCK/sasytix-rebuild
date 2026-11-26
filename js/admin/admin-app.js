@@ -13,7 +13,6 @@
       reports: 'Operational Reports'
     };
 
-    UI.renderDemoBar();
     UI.renderDashboardShell('admin', page, titles[page] || 'Admin');
 
     const root = document.getElementById('admin-main-content');
