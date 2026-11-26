@@ -32,7 +32,7 @@
           <h1 style="font-size:1.5rem; font-weight:800;">Tiket Perjalanan Feri</h1>
         </div>
         <div style="display:flex; gap:10px;">
-          <a href="bookings.html" class="btn btn--outline btn--sm">Kembali ke My Booking</a>
+          <a href="bookings.html" class="btn btn--outline btn--sm">Kembali ke Pesanan Saya</a>
           <button type="button" class="btn btn--primary btn--sm" id="btn-print-ticket">${Icons.icon('download', 15)} Cetak / Simpan PDF</button>
         </div>
       </div>

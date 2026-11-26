@@ -122,9 +122,9 @@ window.SasyTix = window.SasyTix || {};
           <nav class="nav-links" aria-label="Navigasi utama">
             <a href="${root}index.html" class="nav-link ${activeKey === 'home' ? 'is-active' : ''}">Beranda</a>
             <a href="${root}pages/buyer/search.html" class="nav-link ${activeKey === 'search' ? 'is-active' : ''}">Cari Jadwal</a>
-            <a href="${root}pages/buyer/bookings.html" class="nav-link ${activeKey === 'bookings' ? 'is-active' : ''}">My Booking</a>
+            <a href="${root}pages/buyer/bookings.html" class="nav-link ${activeKey === 'bookings' ? 'is-active' : ''}">Pesanan Saya</a>
             <a href="${root}pages/buyer/ticket.html" class="nav-link ${activeKey === 'ticket' ? 'is-active' : ''}">Tiket Saya</a>
-            <a href="${root}pages/buyer/profile.html" class="nav-link ${activeKey === 'profile' ? 'is-active' : ''}">Profil</a>
+            <a href="${root}index.html#faq" class="nav-link">Pusat Bantuan</a>
           </nav>
           <div class="header-actions">
             <div class="user-dropdown-wrap" id="user-dropdown-wrap">
@@ -141,15 +141,7 @@ window.SasyTix = window.SasyTix || {};
                 <div class="user-dropdown-divider"></div>
                 <a href="${root}pages/buyer/profile.html" class="user-dropdown-item" role="menuitem">
                   ${icon('user', 15)}
-                  <span>Profil Saya</span>
-                </a>
-                <a href="${root}pages/buyer/bookings.html" class="user-dropdown-item" role="menuitem">
-                  ${icon('calendar', 15)}
-                  <span>Pesanan Saya</span>
-                </a>
-                <a href="${root}pages/buyer/ticket.html" class="user-dropdown-item" role="menuitem">
-                  ${icon('ticket', 15)}
-                  <span>Tiket Saya</span>
+                  <span>Profil Akun</span>
                 </a>
                 <div class="user-dropdown-divider"></div>
                 <button type="button" class="user-dropdown-item user-dropdown-logout" id="btn-header-logout" role="menuitem">
@@ -167,12 +159,12 @@ window.SasyTix = window.SasyTix || {};
       <div class="mobile-drawer" id="mobile-drawer">
         <a href="${root}index.html" class="nav-link">Beranda</a>
         <a href="${root}pages/buyer/search.html" class="nav-link">Cari Jadwal</a>
-        <a href="${root}pages/buyer/bookings.html" class="nav-link">My Booking</a>
+        <a href="${root}pages/buyer/bookings.html" class="nav-link">Pesanan Saya</a>
         <a href="${root}pages/buyer/ticket.html" class="nav-link">Tiket Saya</a>
-        <a href="${root}pages/buyer/profile.html" class="nav-link">Profil</a>
+        <a href="${root}index.html#faq" class="nav-link">Pusat Bantuan</a>
         <hr style="border:none;border-top:1px solid var(--color-border);">
         <a href="${root}pages/buyer/profile.html" class="btn btn--outline btn--block" style="margin-bottom:8px;">
-          ${icon('user', 15)} ${user ? user.name : 'Hendra Wijaya'}
+          ${icon('user', 15)} ${user ? user.name : 'Hendra Wijaya'} (Profil Akun)
         </a>
         <button type="button" class="btn btn--outline btn--block user-dropdown-logout" id="mobile-logout-btn" style="color:var(--color-error); border-color:#fca5a5;">
           ${icon('logOut', 15)} Keluar (Logout)
@@ -260,7 +252,7 @@ window.SasyTix = window.SasyTix || {};
             <div>
               <h3 class="footer-heading">Akun &amp; Portal</h3>
               <ul class="footer-links">
-                <li><a href="${root}pages/buyer/bookings.html">My Booking</a></li>
+                <li><a href="${root}pages/buyer/bookings.html">Pesanan Saya</a></li>
                 <li><a href="${root}pages/buyer/ticket.html">Boarding Pass Digital</a></li>
                 <li><a href="${root}pages/admin/dashboard.html">Admin Operations</a></li>
                 <li><a href="${root}pages/owner/dashboard.html">Owner Executive</a></li>
@@ -374,11 +366,29 @@ window.SasyTix = window.SasyTix || {};
             </div>
           </div>
           <div class="header-actions">
-            <span class="badge badge--primary" style="display:inline-flex; align-items:center; gap:6px;">
-              ${icon('user', 14)}
-              ${user ? user.name : portalLabel}
-            </span>
-            <a href="${root}pages/buyer/login.html" class="btn btn--outline btn--sm">Ganti Akun</a>
+            <div class="user-dropdown-wrap" id="admin-user-dropdown-wrap">
+              <button type="button" class="btn btn--outline btn--sm user-dropdown-toggle" id="admin-user-toggle" aria-expanded="false">
+                ${icon('user', 14)}
+                <span class="user-dropdown-name">${user ? user.name : (role === 'owner' ? 'Hendra Wijaya' : 'Fajar Pratama')}</span>
+                ${icon('chevronDown', 12)}
+              </button>
+              <div class="user-dropdown-menu" id="admin-user-dropdown-menu" role="menu">
+                <div class="user-dropdown-header">
+                  <div class="user-dropdown-title">${user ? user.name : (role === 'owner' ? 'Hendra Wijaya' : 'Fajar Pratama')}</div>
+                  <div class="user-dropdown-email">${role === 'owner' ? 'Managing Director (Owner)' : 'Operations Team (Admin)'}</div>
+                </div>
+                <div class="user-dropdown-divider"></div>
+                <a href="${root}index.html" class="user-dropdown-item" role="menuitem">
+                  ${icon('anchor', 14)}
+                  <span>Ke Portal Pembeli</span>
+                </a>
+                <div class="user-dropdown-divider"></div>
+                <button type="button" class="user-dropdown-item user-dropdown-logout" id="btn-admin-logout" role="menuitem">
+                  ${icon('logOut', 14)}
+                  <span>Keluar (Logout)</span>
+                </button>
+              </div>
+            </div>
           </div>
         </header>
       `;
@@ -424,6 +434,36 @@ window.SasyTix = window.SasyTix || {};
       collapseBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleSidebarCollapse();
+      });
+    }
+
+    const adminToggle = document.getElementById('admin-user-toggle');
+    const adminWrap = document.getElementById('admin-user-dropdown-wrap');
+    const adminLogout = document.getElementById('btn-admin-logout');
+
+    if (adminToggle && adminWrap) {
+      adminToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = adminWrap.classList.toggle('is-open');
+        adminToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+      document.addEventListener('click', (e) => {
+        if (!adminWrap.contains(e.target)) {
+          adminWrap.classList.remove('is-open');
+          adminToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    if (adminLogout) {
+      adminLogout.addEventListener('click', () => {
+        if (window.SasyTix.Auth) {
+          window.SasyTix.Auth.logout();
+        }
+        showToast('Anda telah keluar dari portal.', 'info');
+        setTimeout(() => {
+          window.location.href = root + 'pages/buyer/login.html';
+        }, 500);
       });
     }
 
