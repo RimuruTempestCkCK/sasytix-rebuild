@@ -13,6 +13,27 @@ window.SasyTix = window.SasyTix || {};
     }).format(amount || 0);
   }
 
+  function initPasswordToggles(container = document) {
+    const { icon } = window.SasyTix.Icons;
+    container.querySelectorAll('.btn-toggle-password').forEach(btn => {
+      if (btn._hasPasswordToggle) return;
+      btn._hasPasswordToggle = true;
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = btn.getAttribute('data-target');
+        const input = targetId ? document.getElementById(targetId) : btn.closest('.password-input-wrap')?.querySelector('input');
+        if (!input) return;
+
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        btn.setAttribute('aria-label', isPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
+        btn.title = isPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi';
+        btn.innerHTML = icon(isPassword ? 'eyeOff' : 'eye', 18);
+      });
+    });
+  }
+
   function formatDate(isoDate) {
     if (!isoDate) return '-';
     const d = new Date(isoDate + 'T00:00:00');
@@ -535,6 +556,7 @@ window.SasyTix = window.SasyTix || {};
     renderPublicFooter,
     renderDashboardShell,
     renderLineChart,
-    generateDummyQR
+    generateDummyQR,
+    initPasswordToggles
   };
 })();

@@ -4,6 +4,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     UI.renderPublicHeader('profile');
     UI.renderPublicFooter();
+    UI.initPasswordToggles();
 
     const state = Storage.loadState();
     const user = Storage.getCurrentUser(state) || state.users[0];

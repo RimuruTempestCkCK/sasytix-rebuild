@@ -1,5 +1,5 @@
 (function () {
-  const { UI, Auth } = window.SasyTix;
+  const { UI, Auth, Icons } = window.SasyTix;
 
   document.addEventListener('DOMContentLoaded', () => {
     UI.renderPublicHeader('auth');
@@ -186,7 +186,12 @@
                 <label class="form-label" for="l-pass" style="margin-bottom:0;">Kata Sandi</label>
                 <a href="javascript:void(0)" id="link-forgot-pass" class="text-xs" style="color:var(--color-primary); font-weight:600;">Lupa sandi?</a>
               </div>
-              <input type="password" id="l-pass" class="form-control" value="demo123" placeholder="Masukkan kata sandi" required autocomplete="current-password">
+              <div class="password-input-wrap">
+                <input type="password" id="l-pass" class="form-control" value="demo123" placeholder="Masukkan kata sandi" required autocomplete="current-password">
+                <button type="button" class="btn-toggle-password" data-target="l-pass" aria-label="Tampilkan kata sandi" title="Tampilkan kata sandi">
+                  ${Icons.icon('eye', 18)}
+                </button>
+              </div>
             </div>
             <button type="submit" class="btn btn--primary btn--block btn--lg">Masuk Sekarang</button>
           </form>
@@ -269,7 +274,12 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="r-pass">Kata Sandi</label>
-              <input type="password" id="r-pass" class="form-control" placeholder="Minimal 6 karakter" required>
+              <div class="password-input-wrap">
+                <input type="password" id="r-pass" class="form-control" placeholder="Minimal 6 karakter" required>
+                <button type="button" class="btn-toggle-password" data-target="r-pass" aria-label="Tampilkan kata sandi" title="Tampilkan kata sandi">
+                  ${Icons.icon('eye', 18)}
+                </button>
+              </div>
             </div>
             <button type="submit" class="btn btn--primary btn--block btn--lg">Daftar &amp; Kirim OTP</button>
           </form>
@@ -333,11 +343,21 @@
           <form id="form-reset" style="display:grid; gap:14px;">
             <div class="form-group">
               <label class="form-label" for="rs-p1">Kata Sandi Baru</label>
-              <input type="password" id="rs-p1" class="form-control" placeholder="Kata sandi baru" required>
+              <div class="password-input-wrap">
+                <input type="password" id="rs-p1" class="form-control" placeholder="Kata sandi baru" required>
+                <button type="button" class="btn-toggle-password" data-target="rs-p1" aria-label="Tampilkan kata sandi" title="Tampilkan kata sandi">
+                  ${Icons.icon('eye', 18)}
+                </button>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="rs-p2">Konfirmasi Kata Sandi Baru</label>
-              <input type="password" id="rs-p2" class="form-control" placeholder="Ulangi kata sandi" required>
+              <div class="password-input-wrap">
+                <input type="password" id="rs-p2" class="form-control" placeholder="Ulangi kata sandi" required>
+                <button type="button" class="btn-toggle-password" data-target="rs-p2" aria-label="Tampilkan kata sandi" title="Tampilkan kata sandi">
+                  ${Icons.icon('eye', 18)}
+                </button>
+              </div>
             </div>
             <button type="submit" class="btn btn--primary btn--block btn--lg">Simpan Kata Sandi Baru</button>
           </form>
@@ -402,6 +422,8 @@
           </div>
         `;
       }
+
+      UI.initPasswordToggles(mount);
     }
 
     function redirectByRole(role) {

@@ -151,6 +151,48 @@
   border-color: var(--color-error);
 }
 
+/* Password Input with Toggle View */
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input-wrap .form-control {
+  padding-right: 42px;
+}
+
+.btn-toggle-password {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition), background-color var(--transition);
+  z-index: 2;
+}
+
+.btn-toggle-password:hover {
+  color: var(--color-primary);
+  background-color: var(--color-surface-alt);
+}
+
+.btn-toggle-password:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
 .form-error {
   font-size: 0.78rem;
   color: var(--color-error);
