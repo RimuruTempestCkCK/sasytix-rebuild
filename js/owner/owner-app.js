@@ -299,7 +299,12 @@
                   <td>${a.email}</td>
                   <td><strong>${a.role}</strong><div class="text-xs text-muted">${(a.permissions || []).join(', ')}</div></td>
                   <td>${UI.statusBadge(a.status)}</td>
-                  <td><button type="button" class="btn btn--outline btn--sm btn-toggle-adm" data-id="${a.id}">${a.status === 'Active' ? 'Nonaktifkan' : 'Aktifkan'}</button></td>
+                  <td>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                      <button type="button" class="btn btn--outline btn--sm btn-edit-adm" data-id="${a.id}">Edit</button>
+                      <button type="button" class="btn btn--outline btn--sm btn-toggle-adm" data-id="${a.id}">${a.status === 'Active' ? 'Nonaktifkan' : 'Aktifkan'}</button>
+                    </div>
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
@@ -309,10 +314,11 @@
         <div class="modal-backdrop" id="adm-modal">
           <div class="modal">
             <div class="modal-header">
-              <h2 class="modal-title">Tambah Admin Operasional</h2>
+              <h2 class="modal-title" id="adm-modal-title">Tambah Admin Operasional</h2>
               <button type="button" class="btn btn--ghost btn--sm" id="adm-modal-close">Tutup</button>
             </div>
             <form id="adm-form">
+              <input type="hidden" id="adm-edit-id" value="">
               <div class="modal-body" style="display:grid; gap:12px;">
                 <div class="form-group">
                   <label class="form-label" for="adm-name">Nama Lengkap</label>
@@ -339,26 +345,55 @@
         </div>
       `;
 
+      const modal = document.getElementById('adm-modal');
       document.getElementById('btn-add-admin').addEventListener('click', () => {
-        document.getElementById('adm-modal').classList.add('is-open');
+        document.getElementById('adm-modal-title').textContent = 'Tambah Admin Operasional';
+        document.getElementById('adm-edit-id').value = '';
+        document.getElementById('adm-form').reset();
+        modal.classList.add('is-open');
       });
+
+      root.querySelectorAll('.btn-edit-adm').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cur = Storage.loadState();
+          const adm = cur.admins.find(x => x.id === btn.getAttribute('data-id'));
+          if (!adm) return;
+          document.getElementById('adm-modal-title').textContent = 'Edit Admin Operasional';
+          document.getElementById('adm-edit-id').value = adm.id;
+          document.getElementById('adm-name').value = adm.name;
+          document.getElementById('adm-email').value = adm.email;
+          document.getElementById('adm-role').value = adm.role;
+          modal.classList.add('is-open');
+        });
+      });
+
       document.getElementById('adm-modal-close').addEventListener('click', () => {
-        document.getElementById('adm-modal').classList.remove('is-open');
+        modal.classList.remove('is-open');
       });
       document.getElementById('adm-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const cur = Storage.loadState();
-        cur.admins.push({
-          id: 'adm-' + Date.now(),
+        const editId = document.getElementById('adm-edit-id').value;
+        const payload = {
           name: document.getElementById('adm-name').value.trim(),
           email: document.getElementById('adm-email').value.trim(),
-          role: document.getElementById('adm-role').value,
-          permissions: ['Verify Payment', 'View Bookings'],
-          status: 'Active',
-          lastActive: 'Baru saja'
-        });
+          role: document.getElementById('adm-role').value
+        };
+        if (editId) {
+          const idx = cur.admins.findIndex(x => x.id === editId);
+          if (idx !== -1) cur.admins[idx] = { ...cur.admins[idx], ...payload };
+          UI.showToast('Data admin berhasil diperbarui.', 'success');
+        } else {
+          cur.admins.push({
+            id: 'adm-' + Date.now(),
+            ...payload,
+            permissions: ['Verify Payment', 'View Bookings'],
+            status: 'Active',
+            lastActive: 'Baru saja'
+          });
+          UI.showToast('Admin baru ditambahkan (simulasi).', 'success');
+        }
         Storage.saveState(cur);
-        UI.showToast('Admin baru ditambahkan (simulasi).', 'success');
         draw();
       });
 

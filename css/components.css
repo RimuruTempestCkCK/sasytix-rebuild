@@ -336,34 +336,41 @@
   place-items: center;
 }
 
-/* Demo Role Bar */
+/* Floating Demo Role Switcher */
 .demo-bar {
-  background: #0F2942;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.8125rem;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 85;
+  background: rgba(11, 37, 60, 0.94);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.78rem;
+  padding: 8px 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: var(--shadow-lg);
+  max-width: calc(100vw - 32px);
 }
 
 .demo-bar-inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .demo-role-pills {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .demo-pill {
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   background: rgba(255, 255, 255, 0.12);
   color: #FFFFFF;

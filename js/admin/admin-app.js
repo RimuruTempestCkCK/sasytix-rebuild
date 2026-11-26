@@ -347,7 +347,10 @@
                     <td>${UI.formatIDR(sch.price)}</td>
                     <td>${sch.booked} / ${sch.quota}</td>
                     <td>
-                      <button type="button" class="btn btn--outline btn--sm btn-del-sch" data-id="${sch.id}">Hapus</button>
+                      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                        <button type="button" class="btn btn--outline btn--sm btn-edit-sch" data-id="${sch.id}">Edit</button>
+                        <button type="button" class="btn btn--outline btn--sm btn-del-sch" data-id="${sch.id}">Hapus</button>
+                      </div>
                     </td>
                   </tr>
                 `;
@@ -359,10 +362,11 @@
         <div class="modal-backdrop" id="sch-modal">
           <div class="modal">
             <div class="modal-header">
-              <h2 class="modal-title">Tambah Jadwal Baru</h2>
+              <h2 class="modal-title" id="sch-modal-title">Tambah Jadwal Baru</h2>
               <button type="button" class="btn btn--ghost btn--sm" id="sch-modal-close">Tutup</button>
             </div>
             <form id="sch-form">
+              <input type="hidden" id="sch-edit-id" value="">
               <div class="modal-body" style="display:grid; gap:12px;">
                 <div class="form-group">
                   <label class="form-label" for="sch-route">Rute</label>
@@ -405,32 +409,65 @@
         </div>
       `;
 
+      const modal = document.getElementById('sch-modal');
       document.getElementById('btn-add-schedule').addEventListener('click', () => {
-        document.getElementById('sch-modal').classList.add('is-open');
+        document.getElementById('sch-modal-title').textContent = 'Tambah Jadwal Baru';
+        document.getElementById('sch-edit-id').value = '';
+        modal.classList.add('is-open');
       });
+
+      root.querySelectorAll('.btn-edit-sch').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cur = Storage.loadState();
+          const sch = cur.schedules.find(s => s.id === btn.getAttribute('data-id'));
+          if (!sch) return;
+          document.getElementById('sch-modal-title').textContent = `Edit Jadwal ${sch.id}`;
+          document.getElementById('sch-edit-id').value = sch.id;
+          document.getElementById('sch-route').value = sch.routeId;
+          document.getElementById('sch-op').value = sch.operatorId;
+          document.getElementById('sch-date').value = sch.date;
+          document.getElementById('sch-time').value = sch.departureTime;
+          document.getElementById('sch-price').value = sch.price;
+          document.getElementById('sch-quota').value = sch.quota;
+          modal.classList.add('is-open');
+        });
+      });
+
       document.getElementById('sch-modal-close').addEventListener('click', () => {
-        document.getElementById('sch-modal').classList.remove('is-open');
+        modal.classList.remove('is-open');
       });
+
       document.getElementById('sch-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const cur = Storage.loadState();
+        const editId = document.getElementById('sch-edit-id').value;
         const op = Storage.getOperatorById(document.getElementById('sch-op').value, cur);
-        cur.schedules.unshift({
-          id: 'SCH-' + String(Math.floor(1100 + Math.random() * 8800)),
+        const payload = {
           routeId: document.getElementById('sch-route').value,
           operatorId: op.id,
           vessel: op.vessel,
           date: document.getElementById('sch-date').value,
           departureTime: document.getElementById('sch-time').value,
-          arrivalTime: '10:00',
           price: Number(document.getElementById('sch-price').value) || 440000,
-          quota: Number(document.getElementById('sch-quota').value) || 40,
-          booked: 0,
-          facilities: ['Air Conditioning', 'Luggage 20kg'],
-          status: 'active'
-        });
+          quota: Number(document.getElementById('sch-quota').value) || 40
+        };
+
+        if (editId) {
+          const idx = cur.schedules.findIndex(s => s.id === editId);
+          if (idx !== -1) cur.schedules[idx] = { ...cur.schedules[idx], ...payload };
+          UI.showToast(`Jadwal ${editId} berhasil diperbarui.`, 'success');
+        } else {
+          cur.schedules.unshift({
+            id: 'SCH-' + String(Math.floor(1100 + Math.random() * 8800)),
+            ...payload,
+            arrivalTime: '10:00',
+            booked: 0,
+            facilities: ['Air Conditioning', 'Luggage 20kg'],
+            status: 'active'
+          });
+          UI.showToast('Jadwal baru berhasil ditambahkan.', 'success');
+        }
         Storage.saveState(cur);
-        UI.showToast('Jadwal baru berhasil ditambahkan.', 'success');
         draw();
       });
 
@@ -451,6 +488,10 @@
     function draw() {
       const st = Storage.loadState();
       root.innerHTML = `
+        <div class="section-header" style="margin-bottom:16px;">
+          <h1 style="font-size:1.25rem; font-weight:700;">Manajemen Rute &amp; Terminal</h1>
+          <button type="button" class="btn btn--primary btn--sm" id="btn-add-route">+ Tambah Rute</button>
+        </div>
         <div class="table-wrap">
           <table class="data-table">
             <thead>
@@ -471,13 +512,127 @@
                   <td class="text-sm">${r.destinationTerminal}</td>
                   <td>${r.durationMinutes} mnt</td>
                   <td>${UI.statusBadge(r.status)}</td>
-                  <td><button type="button" class="btn btn--outline btn--sm btn-toggle-rt" data-id="${r.id}">${r.status === 'active' ? 'Nonaktifkan' : 'Aktifkan'}</button></td>
+                  <td>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                      <button type="button" class="btn btn--outline btn--sm btn-edit-rt" data-id="${r.id}">Edit</button>
+                      <button type="button" class="btn btn--outline btn--sm btn-toggle-rt" data-id="${r.id}">${r.status === 'active' ? 'Nonaktifkan' : 'Aktifkan'}</button>
+                    </div>
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
           </table>
         </div>
+
+        <div class="modal-backdrop" id="rt-modal">
+          <div class="modal">
+            <div class="modal-header">
+              <h2 class="modal-title" id="rt-modal-title">Tambah Rute Baru</h2>
+              <button type="button" class="btn btn--ghost btn--sm" id="rt-modal-close">Tutup</button>
+            </div>
+            <form id="rt-form">
+              <input type="hidden" id="rt-edit-id" value="">
+              <div class="modal-body" style="display:grid; gap:12px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="form-group">
+                    <label class="form-label" for="rt-origin-city">Kota Asal</label>
+                    <input type="text" id="rt-origin-city" class="form-control" placeholder="Batam" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rt-dest-city">Kota Tujuan</label>
+                    <input type="text" id="rt-dest-city" class="form-control" placeholder="Singapura" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="rt-origin-term">Terminal Asal</label>
+                  <input type="text" id="rt-origin-term" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="rt-dest-term">Terminal Tujuan</label>
+                  <input type="text" id="rt-dest-term" class="form-control" required>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                  <div class="form-group">
+                    <label class="form-label" for="rt-dur">Estimasi Durasi (menit)</label>
+                    <input type="number" id="rt-dur" class="form-control" value="50" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rt-status">Status Rute</label>
+                    <select id="rt-status" class="form-control">
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn--primary">Simpan Rute</button>
+              </div>
+            </form>
+          </div>
+        </div>
       `;
+
+      const modal = document.getElementById('rt-modal');
+      document.getElementById('btn-add-route').addEventListener('click', () => {
+        document.getElementById('rt-modal-title').textContent = 'Tambah Rute Baru';
+        document.getElementById('rt-edit-id').value = '';
+        document.getElementById('rt-form').reset();
+        modal.classList.add('is-open');
+      });
+
+      root.querySelectorAll('.btn-edit-rt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cur = Storage.loadState();
+          const rt = cur.routes.find(x => x.id === btn.getAttribute('data-id'));
+          if (!rt) return;
+          document.getElementById('rt-modal-title').textContent = 'Edit Rute';
+          document.getElementById('rt-edit-id').value = rt.id;
+          document.getElementById('rt-origin-city').value = rt.originCity;
+          document.getElementById('rt-dest-city').value = rt.destinationCity;
+          document.getElementById('rt-origin-term').value = rt.originTerminal;
+          document.getElementById('rt-dest-term').value = rt.destinationTerminal;
+          document.getElementById('rt-dur').value = rt.durationMinutes;
+          document.getElementById('rt-status').value = rt.status;
+          modal.classList.add('is-open');
+        });
+      });
+
+      document.getElementById('rt-modal-close').addEventListener('click', () => {
+        modal.classList.remove('is-open');
+      });
+
+      document.getElementById('rt-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const cur = Storage.loadState();
+        const editId = document.getElementById('rt-edit-id').value;
+        const payload = {
+          originCity: document.getElementById('rt-origin-city').value.trim(),
+          destinationCity: document.getElementById('rt-dest-city').value.trim(),
+          originTerminal: document.getElementById('rt-origin-term').value.trim(),
+          destinationTerminal: document.getElementById('rt-dest-term').value.trim(),
+          durationMinutes: Number(document.getElementById('rt-dur').value) || 50,
+          status: document.getElementById('rt-status').value
+        };
+        if (editId) {
+          const idx = cur.routes.findIndex(x => x.id === editId);
+          if (idx !== -1) cur.routes[idx] = { ...cur.routes[idx], ...payload };
+          UI.showToast('Rute berhasil diperbarui.', 'success');
+        } else {
+          cur.routes.push({
+            id: 'rt-' + Date.now(),
+            ...payload,
+            originCountry: payload.originCity,
+            destinationCountry: payload.destinationCity,
+            basePrice: 450000,
+            corridor: `${payload.originCity} - ${payload.destinationCity}`
+          });
+          UI.showToast('Rute baru berhasil ditambahkan.', 'success');
+        }
+        Storage.saveState(cur);
+        draw();
+      });
+
       root.querySelectorAll('.btn-toggle-rt').forEach(btn => {
         btn.addEventListener('click', () => {
           const cur = Storage.loadState();

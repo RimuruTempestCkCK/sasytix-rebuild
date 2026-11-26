@@ -61,6 +61,24 @@ window.SasyTix = window.SasyTix || {};
     }, 3600);
   }
 
+  function initScrollReveal() {
+    const els = document.querySelectorAll('[data-reveal]');
+    if (!els.length) return;
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(el => el.classList.add('is-revealed'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    els.forEach(el => io.observe(el));
+  }
+
   function renderDemoBar() {
     const existing = document.getElementById('demo-bar-mount');
     if (!existing) return;
@@ -70,16 +88,14 @@ window.SasyTix = window.SasyTix || {};
     const role = user ? user.role : 'guest';
 
     existing.innerHTML = `
-      <div class="demo-bar">
-        <div class="container demo-bar-inner">
+      <div class="demo-bar" aria-label="Demo role switcher">
+        <div class="demo-bar-inner">
           <div class="demo-role-pills">
-            <span>Demo Mode:</span>
-            <button type="button" class="demo-pill ${role === 'buyer' ? 'is-active' : ''}" data-demo-role="buyer">Buyer (${role === 'buyer' ? 'Aktif' : 'buyer@demo.com'})</button>
-            <button type="button" class="demo-pill ${role === 'admin' ? 'is-active' : ''}" data-demo-role="admin">Admin (admin@demo.com)</button>
-            <button type="button" class="demo-pill ${role === 'owner' ? 'is-active' : ''}" data-demo-role="owner">Owner (owner@demo.com)</button>
-          </div>
-          <div class="demo-role-pills">
-            <button type="button" class="demo-pill" id="btn-reset-demo">Reset Demo Data</button>
+            <span style="font-weight:700; opacity:0.85;">Demo:</span>
+            <button type="button" class="demo-pill ${role === 'buyer' ? 'is-active' : ''}" data-demo-role="buyer">Buyer</button>
+            <button type="button" class="demo-pill ${role === 'admin' ? 'is-active' : ''}" data-demo-role="admin">Admin</button>
+            <button type="button" class="demo-pill ${role === 'owner' ? 'is-active' : ''}" data-demo-role="owner">Owner</button>
+            <button type="button" class="demo-pill" id="btn-reset-demo" title="Reset Demo Data">Reset</button>
           </div>
         </div>
       </div>
@@ -115,6 +131,7 @@ window.SasyTix = window.SasyTix || {};
   }
 
   function renderPublicHeader(activeKey) {
+    document.body.classList.add('public-body');
     const mount = document.getElementById('site-header-mount');
     if (!mount) return;
     const root = getRootPrefix();
@@ -123,7 +140,7 @@ window.SasyTix = window.SasyTix || {};
     const user = window.SasyTix.Storage.getCurrentUser(state);
 
     mount.innerHTML = `
-      <header class="site-header">
+      <header class="site-header" id="site-header">
         <div class="container header-inner">
           <a href="${root}index.html" class="brand-logo">
             <span class="brand-logo-mark">${icon('ship', 20)}</span>
@@ -146,7 +163,7 @@ window.SasyTix = window.SasyTix || {};
               <a href="${root}pages/buyer/auth.html?mode=login" class="btn btn--outline btn--sm btn-desktop-only">Masuk</a>
               <a href="${root}pages/buyer/auth.html?mode=register" class="btn btn--primary btn--sm btn-desktop-only">Daftar</a>
             `}
-            <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Buka menu navigasi">
+            <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Buka menu navigasi" aria-expanded="false">
               ${icon('menu', 20)}
             </button>
           </div>
@@ -164,13 +181,22 @@ window.SasyTix = window.SasyTix || {};
       </div>
     `;
 
+    const headerEl = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      if (headerEl) headerEl.classList.toggle('is-scrolled', window.scrollY > 12);
+    }, { passive: true });
+
     const toggle = document.getElementById('mobile-menu-toggle');
     const drawer = document.getElementById('mobile-drawer');
     if (toggle && drawer) {
       toggle.addEventListener('click', () => {
-        drawer.classList.toggle('is-open');
+        const isOpen = drawer.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        toggle.innerHTML = icon(isOpen ? 'x' : 'menu', 20);
       });
     }
+
+    initScrollReveal();
   }
 
   function renderPublicFooter() {
@@ -187,7 +213,7 @@ window.SasyTix = window.SasyTix || {};
                 <span class="brand-logo-mark" style="background:var(--color-secondary);">${icon('ship', 20)}</span>
                 <span>Sasy.Tix Maritime</span>
               </div>
-              <p class="text-sm" style="color:rgba(255,255,255,0.75); max-width:34ch;">
+              <p class="text-sm" style="color:rgba(255,255,255,0.78); max-width:34ch;">
                 Platform pemesanan tiket feri modern untuk koridor Batam, Singapura, dan Malaysia dengan pengalaman perjalanan yang transparan dan terpercaya.
               </p>
             </div>
@@ -201,7 +227,7 @@ window.SasyTix = window.SasyTix || {};
               </ul>
             </div>
             <div>
-              <h3 class="footer-heading">Akun & Portal</h3>
+              <h3 class="footer-heading">Akun &amp; Portal</h3>
               <ul class="footer-links">
                 <li><a href="${root}pages/buyer/bookings.html">My Booking</a></li>
                 <li><a href="${root}pages/buyer/ticket.html">Boarding Pass Digital</a></li>
@@ -211,10 +237,10 @@ window.SasyTix = window.SasyTix || {};
             </div>
             <div>
               <h3 class="footer-heading">Kantor Batam</h3>
-              <p class="text-sm" style="color:rgba(255,255,255,0.75);">
+              <p class="text-sm" style="color:rgba(255,255,255,0.78);">
                 Jl. Jend. A. Yani, Taman Baloi, Batam Kota, Kepulauan Riau 29444
               </p>
-              <p class="text-sm" style="margin-top:8px; color:rgba(255,255,255,0.85);">
+              <p class="text-sm" style="margin-top:8px; color:rgba(255,255,255,0.9);">
                 WhatsApp: +62 897-6950-796
               </p>
             </div>
@@ -231,6 +257,7 @@ window.SasyTix = window.SasyTix || {};
   function renderDashboardShell(role, activeKey, pageTitle) {
     const sidebarMount = document.getElementById('app-sidebar-mount');
     const topbarMount = document.getElementById('app-topbar-mount');
+    const mainEl = document.querySelector('.app-main');
     const root = getRootPrefix();
     const { icon } = window.SasyTix.Icons;
     const state = window.SasyTix.Storage.loadState();
@@ -310,6 +337,13 @@ window.SasyTix = window.SasyTix || {};
       `;
     }
 
+    if (mainEl && !mainEl.querySelector('.app-footer')) {
+      const footer = document.createElement('footer');
+      footer.className = 'app-footer';
+      footer.innerHTML = `<span>© 2026 Sasy.Tix Maritime · ${portalLabel}</span><span>Frontend Prototype (LocalStorage)</span>`;
+      mainEl.appendChild(footer);
+    }
+
     const toggleBtn = document.getElementById('sidebar-toggle-btn');
     const sidebar = document.getElementById('app-sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
@@ -346,6 +380,7 @@ window.SasyTix = window.SasyTix || {};
     formatDate,
     statusBadge,
     showToast,
+    initScrollReveal,
     renderDemoBar,
     renderPublicHeader,
     renderPublicFooter,

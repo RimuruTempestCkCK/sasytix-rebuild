@@ -6,7 +6,7 @@
   <title>Sasy.Tix Maritime — Pemesanan Tiket Feri Batam, Singapura &amp; Malaysia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/global.css">
@@ -19,9 +19,11 @@
   <div id="site-header-mount"></div>
 
   <main>
-    <!-- Hero Section -->
+    <!-- Hero Section with Original Background Video -->
     <section class="hero">
-      <img src="assets/images/hero/hero-ferry.jpg" alt="Kapal feri cepat berlayar di perairan Batam menuju Singapura dan Malaysia" class="hero-bg">
+      <video autoplay muted loop playsinline poster="assets/images/hero/hero-ferry.jpg" class="hero-bg" aria-hidden="true">
+        <source src="assets/videos/hero-ferry.mp4" type="video/mp4">
+      </video>
       <div class="hero-overlay"></div>
       <div class="container hero-content">
         <span class="hero-badge">Batam · Singapura · Malaysia Ferry Portal</span>
@@ -113,7 +115,7 @@
     </section>
 
     <!-- Route Options -->
-    <section class="section">
+    <section class="section" data-reveal>
       <div class="container">
         <div class="section-header">
           <div>
@@ -128,7 +130,7 @@
     </section>
 
     <!-- Featured Schedules -->
-    <section class="section section--alt">
+    <section class="section section--alt" data-reveal>
       <div class="container">
         <div class="section-header">
           <div>
@@ -142,7 +144,7 @@
     </section>
 
     <!-- Popular Destinations -->
-    <section class="section">
+    <section class="section" data-reveal>
       <div class="container">
         <div class="section-header">
           <div>
@@ -186,7 +188,7 @@
     </section>
 
     <!-- Service Advantages & Cabin Preview -->
-    <section class="section section--alt">
+    <section class="section section--alt" data-reveal>
       <div class="container">
         <div class="checkout-grid" style="align-items:center;">
           <div>
@@ -219,7 +221,7 @@
     </section>
 
     <!-- Booking Process -->
-    <section class="section" id="cara-pesan">
+    <section class="section" id="cara-pesan" data-reveal>
       <div class="container">
         <div class="section-header">
           <div>
@@ -248,7 +250,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="section section--alt" id="faq">
+    <section class="section section--alt" id="faq" data-reveal>
       <div class="container">
         <div class="section-header">
           <div>
