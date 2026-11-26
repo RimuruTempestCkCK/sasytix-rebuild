@@ -1268,6 +1268,266 @@ body:not(.public-body) .modal-footer {
 }
 
 /* ==========================================================================
+   PAGINATION & JUMP TO PAGE
+   ========================================================================== */
+.pagination-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border-soft);
+  background: var(--bg-card);
+  border-radius: 0 0 14px 14px;
+}
+
+.pagination-info {
+  font-size: 12.5px;
+  color: var(--t-muted);
+}
+
+.pagination-info strong {
+  color: var(--t-base);
+  font-weight: 600;
+}
+
+.pagination-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--t-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--t-base);
+  border-color: var(--t-light);
+}
+
+.page-btn.is-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+.page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.page-ellipsis {
+  color: var(--t-light);
+  padding: 0 4px;
+  font-size: 12px;
+}
+
+.page-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border-soft);
+  font-size: 12px;
+  color: var(--t-muted);
+}
+
+.page-jump-input {
+  width: 54px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--t-base);
+  font-size: 12.5px;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: center;
+  outline: none;
+}
+
+.page-jump-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.page-jump-btn {
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--bg-muted);
+  color: var(--t-base);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.page-jump-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   UNIFORM TOAST ALERTS & CONFIRMATION / FORM MODALS
+   ========================================================================== */
+body:not(.public-body) .toast-container {
+  position: fixed;
+  top: 76px;
+  right: 24px;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(380px, calc(100vw - 32px));
+}
+
+body:not(.public-body) .toast {
+  background: var(--bg-card);
+  color: var(--t-base);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--info);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  animation: toastSlideIn 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+body:not(.public-body) .toast--success { border-left-color: var(--success); }
+body:not(.public-body) .toast--error,
+body:not(.public-body) .toast--danger { border-left-color: var(--danger); }
+body:not(.public-body) .toast--warning { border-left-color: var(--warning); }
+body:not(.public-body) .toast--info { border-left-color: var(--primary); }
+
+body:not(.public-body) .toast-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+body:not(.public-body) .toast--success .toast-icon { color: var(--success); }
+body:not(.public-body) .toast--error .toast-icon,
+body:not(.public-body) .toast--danger .toast-icon { color: var(--danger); }
+body:not(.public-body) .toast--warning .toast-icon { color: var(--warning); }
+body:not(.public-body) .toast--info .toast-icon { color: var(--primary); }
+
+body:not(.public-body) .toast-body {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+}
+
+body:not(.public-body) .toast-close {
+  color: var(--t-light);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+body:not(.public-body) .toast-close:hover {
+  color: var(--t-base);
+  background: var(--bg-hover);
+}
+
+body:not(.public-body) .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(3px);
+  z-index: 220;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+body:not(.public-body) .modal-backdrop.is-open {
+  display: flex;
+}
+
+body:not(.public-body) .modal {
+  width: min(580px, 95vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body:not(.public-body) .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+body:not(.public-body) .modal-title {
+  font-family: 'Inter Tight', 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--t-base);
+  margin: 0;
+}
+
+body:not(.public-body) .modal-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  font-size: 13.5px;
+  color: var(--t-base);
+}
+
+body:not(.public-body) .modal-footer {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+body:not(.public-body) .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+body:not(.public-body) .form-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--t-base);
+}
+
+/* ==========================================================================
    RESPONSIVE BREAKPOINTS
    ========================================================================== */
 @media (max-width: 1200px) {

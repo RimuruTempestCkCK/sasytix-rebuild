@@ -73,13 +73,194 @@ window.SasyTix = window.SasyTix || {};
       container.className = 'toast-container';
       document.body.appendChild(container);
     }
+    const { icon } = window.SasyTix.Icons;
+    const toastType = type || 'info';
+    const iconName = toastType === 'success' ? 'checkCircle' : (toastType === 'error' || toastType === 'danger' || toastType === 'warning') ? 'alertCircle' : 'clock';
     const t = document.createElement('div');
-    t.className = `toast toast--${type || 'info'}`;
-    t.innerHTML = `<span>${message}</span>`;
+    t.className = `toast toast--${toastType}`;
+    t.setAttribute('role', 'status');
+    t.innerHTML = `
+      <span class="toast-icon">${icon(iconName, 17)}</span>
+      <div class="toast-body">${message}</div>
+      <button type="button" class="toast-close" aria-label="Tutup notifikasi">${icon('x', 14)}</button>
+    `;
+    t.querySelector('.toast-close').addEventListener('click', () => t.remove());
     container.appendChild(t);
     setTimeout(() => {
-      t.remove();
-    }, 3600);
+      if (t.parentNode) t.remove();
+    }, 4000);
+  }
+
+  function confirmDialog({ title, message, confirmLabel = 'Ya, Lanjutkan', cancelLabel = 'Batal', type = 'primary', showInput = false, inputLabel = '', inputPlaceholder = '', inputDefault = '', onConfirm }) {
+    let backdrop = document.getElementById('ui-confirm-modal-backdrop');
+    if (backdrop) backdrop.remove();
+
+    const { icon } = window.SasyTix.Icons;
+    backdrop = document.createElement('div');
+    backdrop.id = 'ui-confirm-modal-backdrop';
+    backdrop.className = 'modal-backdrop is-open';
+    const btnClass = type === 'danger' ? 'btn--primary' : 'btn--primary';
+    const btnStyle = type === 'danger' ? 'background:var(--danger); border-color:var(--danger);' : '';
+
+    backdrop.innerHTML = `
+      <div class="modal" role="dialog" aria-modal="true" style="max-width:440px;">
+        <div class="modal-header">
+          <h3 class="modal-title">${title}</h3>
+          <button type="button" class="icon-btn" id="ui-confirm-close" aria-label="Tutup">${icon('x', 16)}</button>
+        </div>
+        <div class="modal-body">
+          <p style="margin:0 0 ${showInput ? '14px' : '0'}; color:var(--t-muted); line-height:1.55;">${message}</p>
+          ${showInput ? `
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="ui-confirm-input">${inputLabel}</label>
+              <input type="text" class="input" id="ui-confirm-input" value="${inputDefault}" placeholder="${inputPlaceholder}">
+            </div>
+          ` : ''}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn--outline btn--sm" id="ui-confirm-cancel">${cancelLabel}</button>
+          <button type="button" class="btn ${btnClass} btn--sm" id="ui-confirm-ok" style="${btnStyle}">${confirmLabel}</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    const close = () => backdrop.remove();
+    document.getElementById('ui-confirm-close').addEventListener('click', close);
+    document.getElementById('ui-confirm-cancel').addEventListener('click', close);
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) close();
+    });
+
+    const okBtn = document.getElementById('ui-confirm-ok');
+    okBtn.addEventListener('click', () => {
+      const val = showInput ? document.getElementById('ui-confirm-input').value.trim() : true;
+      close();
+      if (onConfirm) onConfirm(val);
+    });
+
+    if (showInput) {
+      setTimeout(() => document.getElementById('ui-confirm-input')?.focus(), 40);
+    }
+  }
+
+  function openFormModal({ title, bodyHtml, submitLabel = 'Simpan', onSubmit }) {
+    let backdrop = document.getElementById('ui-form-modal-backdrop');
+    if (backdrop) backdrop.remove();
+
+    const { icon } = window.SasyTix.Icons;
+    backdrop = document.createElement('div');
+    backdrop.id = 'ui-form-modal-backdrop';
+    backdrop.className = 'modal-backdrop is-open';
+    backdrop.innerHTML = `
+      <div class="modal" role="dialog" aria-modal="true" style="max-width:560px;">
+        <div class="modal-header">
+          <h3 class="modal-title">${title}</h3>
+          <button type="button" class="icon-btn" id="ui-form-close" aria-label="Tutup">${icon('x', 16)}</button>
+        </div>
+        <form id="ui-popup-form">
+          <div class="modal-body">
+            ${bodyHtml}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn--outline btn--sm" id="ui-form-cancel">Batal</button>
+            <button type="submit" class="btn btn--primary btn--sm">${submitLabel}</button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(backdrop);
+
+    const close = () => backdrop.remove();
+    document.getElementById('ui-form-close').addEventListener('click', close);
+    document.getElementById('ui-form-cancel').addEventListener('click', close);
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) close();
+    });
+
+    document.getElementById('ui-popup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (onSubmit) {
+        const shouldClose = onSubmit(e.target, close);
+        if (shouldClose !== false) close();
+      } else {
+        close();
+      }
+    });
+  }
+
+  function renderPagination(totalItems, currentPage, pageSize) {
+    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+    const safePage = Math.min(Math.max(1, currentPage), totalPages);
+    const startIdx = totalItems === 0 ? 0 : (safePage - 1) * pageSize + 1;
+    const endIdx = Math.min(totalItems, safePage * pageSize);
+
+    let pages = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (safePage > 3) pages.push('...');
+      for (let i = Math.max(2, safePage - 1); i <= Math.min(totalPages - 1, safePage + 1); i++) {
+        pages.push(i);
+      }
+      if (safePage < totalPages - 2) pages.push('...');
+      pages.push(totalPages);
+    }
+
+    return `
+      <div class="pagination-bar" data-total-pages="${totalPages}">
+        <div class="pagination-info">
+          Menampilkan <strong>${startIdx}–${endIdx}</strong> dari <strong>${totalItems}</strong> data · Hal. <strong>${safePage}</strong> / ${totalPages}
+        </div>
+        <div class="pagination-controls">
+          <button type="button" class="page-btn" data-page="${safePage - 1}" ${safePage <= 1 ? 'disabled' : ''} aria-label="Halaman sebelumnya">‹</button>
+          ${pages.map(p => p === '...'
+            ? '<span class="page-ellipsis">…</span>'
+            : `<button type="button" class="page-btn ${p === safePage ? 'is-active' : ''}" data-page="${p}">${p}</button>`
+          ).join('')}
+          <button type="button" class="page-btn" data-page="${safePage + 1}" ${safePage >= totalPages ? 'disabled' : ''} aria-label="Halaman berikutnya">›</button>
+          <div class="page-jump">
+            <span>Loncat:</span>
+            <input type="number" class="page-jump-input" min="1" max="${totalPages}" value="${safePage}" aria-label="Loncat ke halaman">
+            <button type="button" class="page-jump-btn">Go</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function bindPagination(containerEl, totalItems, pageSize, onPageChange) {
+    if (!containerEl) return;
+    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+    containerEl.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = parseInt(btn.getAttribute('data-page'), 10);
+        if (!isNaN(target) && target >= 1 && target <= totalPages) {
+          onPageChange(target);
+        }
+      });
+    });
+    const jumpInput = containerEl.querySelector('.page-jump-input');
+    const jumpBtn = containerEl.querySelector('.page-jump-btn');
+    function doJump() {
+      if (!jumpInput) return;
+      const val = parseInt(jumpInput.value, 10);
+      if (isNaN(val) || val < 1 || val > totalPages) {
+        showToast(`Masukkan nomor halaman antara 1 sampai ${totalPages}.`, 'warning');
+        return;
+      }
+      onPageChange(val);
+    }
+    if (jumpBtn) jumpBtn.addEventListener('click', doJump);
+    if (jumpInput) {
+      jumpInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          doJump();
+        }
+      });
+    }
   }
 
   function initScrollReveal() {
@@ -738,6 +919,10 @@ window.SasyTix = window.SasyTix || {};
     formatDate,
     statusBadge,
     showToast,
+    confirmDialog,
+    openFormModal,
+    renderPagination,
+    bindPagination,
     initScrollReveal,
     renderDemoBar,
     renderPublicHeader,

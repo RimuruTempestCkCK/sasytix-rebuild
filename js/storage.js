@@ -1,7 +1,7 @@
 window.SasyTix = window.SasyTix || {};
 
 (function () {
-  const STORAGE_KEY = 'sasytix_rebuild_state_v2';
+  const STORAGE_KEY = 'sasytix_rebuild_state_v3';
 
   function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
