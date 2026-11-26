@@ -227,18 +227,23 @@
 
 .operator-badge {
   display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
 }
 
 .operator-logo {
-  width: 72px;
-  height: 36px;
+  height: 38px;
+  max-width: 140px;
+  width: auto;
   object-fit: contain;
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: 4px;
+  object-position: left center;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
 }
 
 .schedule-timeline {

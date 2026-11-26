@@ -126,10 +126,7 @@
         <article class="schedule-card">
           <div class="operator-badge">
             <img src="${op ? op.logo : ''}" alt="${op ? op.name : 'Ferry'}" class="operator-logo">
-            <div>
-              <strong style="display:block;">${op ? op.name : sch.vessel}</strong>
-              <span class="text-xs text-muted">${sch.vessel}</span>
-            </div>
+            <span class="text-xs text-muted" style="font-weight:600;">${sch.vessel}</span>
           </div>
           <div class="schedule-timeline">
             <div class="timeline-point">

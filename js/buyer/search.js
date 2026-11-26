@@ -77,12 +77,9 @@
           <article class="schedule-card">
             <div class="operator-badge">
               <img src="../../${op ? op.logo : ''}" alt="${op ? op.name : ''}" class="operator-logo">
-              <div>
-                <strong style="display:block;">${op ? op.name : sch.vessel}</strong>
-                <span class="text-xs text-muted">${sch.vessel}</span>
-                <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:6px;">
-                  ${(sch.facilities || []).slice(0, 3).map(f => `<span class="badge badge--neutral">${f}</span>`).join('')}
-                </div>
+              <span class="text-xs text-muted" style="font-weight:600;">${sch.vessel}</span>
+              <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:4px;">
+                ${(sch.facilities || []).slice(0, 3).map(f => `<span class="badge badge--neutral">${f}</span>`).join('')}
               </div>
             </div>
 
