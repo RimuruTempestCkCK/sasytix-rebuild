@@ -337,9 +337,6 @@ window.SasyTix = window.SasyTix || {};
                 <div class="brand-tag">${portalLabel}</div>
               </div>
             </a>
-            <button type="button" class="sidebar-collapse-btn" id="sidebar-collapse-btn" title="${isCollapsed ? 'Lebarkan Sidebar' : 'Ciutkan Sidebar'}" aria-label="Toggle sidebar collapse">
-              ${icon(isCollapsed ? 'chevronRight' : 'chevronLeft', 14)}
-            </button>
           </div>
           <nav class="sidebar-nav" aria-label="${portalLabel} navigation">
             <div class="sidebar-section-label">Workspace</div>
@@ -503,7 +500,6 @@ window.SasyTix = window.SasyTix || {};
 
     // Sidebar collapse & drawer events
     const toggleBtn = document.getElementById('sidebar-toggle-btn');
-    const collapseBtn = document.getElementById('sidebar-collapse-btn');
     const sidebar = document.getElementById('app-sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
     const appShell = document.querySelector('.app-shell');
@@ -513,10 +509,6 @@ window.SasyTix = window.SasyTix || {};
       const willBeCollapsed = !appShell.classList.contains('sidebar-collapsed');
       appShell.classList.toggle('sidebar-collapsed', willBeCollapsed);
       localStorage.setItem('sasytix_sidebar_collapsed', willBeCollapsed ? 'true' : 'false');
-      if (collapseBtn) {
-        collapseBtn.innerHTML = icon(willBeCollapsed ? 'chevronRight' : 'chevronLeft', 14);
-        collapseBtn.title = willBeCollapsed ? 'Lebarkan Sidebar' : 'Ciutkan Sidebar';
-      }
     }
 
     if (toggleBtn) {
@@ -527,13 +519,6 @@ window.SasyTix = window.SasyTix || {};
           sidebar.classList.toggle('is-open');
           backdrop.classList.toggle('is-open');
         }
-      });
-    }
-
-    if (collapseBtn) {
-      collapseBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleSidebarCollapse();
       });
     }
 
