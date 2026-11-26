@@ -48,13 +48,25 @@
       id: 'admin-booking-line-chart',
       labels: months,
       series: [
-        { name: 'Total Booking', data: bookingData, color: '#0F766E', unit: ' booking', showArea: true },
-        { name: 'Penumpang (Pax)', data: paxData, color: '#0284C7', unit: ' pax', dashed: true, showArea: false }
+        { name: 'Total Booking', data: bookingData, color: '#1D4ED8', unit: ' booking', showArea: true },
+        { name: 'Penumpang (Pax)', data: paxData, color: '#0EA5E9', unit: ' pax', dashed: true, showArea: false }
       ],
       height: 230
     });
 
     root.innerHTML = `
+      <section class="page-hero">
+        <div>
+          <span class="eyebrow">Admin Operations</span>
+          <h1 class="page-hero-title">Dashboard Operasional</h1>
+          <p class="page-hero-sub">Ringkasan pemesanan tiket, verifikasi pembayaran, dan jadwal keberangkatan aktif.</p>
+        </div>
+        <div class="page-hero-actions">
+          <a href="payments.html" class="btn btn--outline">${icon('creditCard', 14)} Verifikasi Pembayaran</a>
+          <a href="bookings.html" class="btn btn--primary">${icon('fileText', 14)} Kelola Booking</a>
+        </div>
+      </section>
+
       <div class="kpi-grid">
         <div class="kpi-card">
           <div>
@@ -122,8 +134,8 @@
             </div>
             <div class="chart-controls">
               <div class="chart-legend">
-                <span class="legend-item"><span class="legend-dot" style="background:#0F766E;"></span> Booking</span>
-                <span class="legend-item"><span class="legend-dot" style="background:#0284C7;"></span> Penumpang</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#1D4ED8;"></span> Booking</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#0EA5E9;"></span> Penumpang</span>
               </div>
               <div class="chart-tab-group">
                 <button type="button" class="chart-tab-btn is-active" id="tab-admin-line">${icon('lineChart', 14)} Line</button>
@@ -148,11 +160,11 @@
           </div>
         </div>
 
-        <div class="card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 14px rgba(11,37,60,0.02);">
-          <div class="card-header" style="background:#FAFCFE; border-bottom:1px solid var(--color-border); padding:var(--space-5) var(--space-6);">
+        <div class="card">
+          <div class="card-header">
             <div>
-              <h2 class="card-title" style="font-size:1.0625rem;">Status Keberangkatan Terdekat</h2>
-              <div class="text-xs text-muted" style="margin-top:2px;">4 Jadwal Kapal Aktif Hari Ini</div>
+              <span class="eyebrow">Jadwal</span>
+              <h2 class="card-title">Status Keberangkatan Terdekat</h2>
             </div>
             <span class="badge badge--info">${state.schedules.length} Total</span>
           </div>
@@ -180,11 +192,11 @@
         </div>
       </div>
 
-      <div class="card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 14px rgba(11,37,60,0.02);">
-        <div class="card-header" style="background:#FAFCFE; border-bottom:1px solid var(--color-border); padding:var(--space-5) var(--space-6);">
+      <div class="card">
+        <div class="card-header">
           <div>
-            <h2 class="card-title" style="font-size:1.0625rem;">Booking Terbaru Masuk</h2>
-            <div class="text-xs text-muted" style="margin-top:2px;">Daftar transaksi penumpang paling mutakhir</div>
+            <span class="eyebrow">Transaksi</span>
+            <h2 class="card-title">Booking Terbaru Masuk</h2>
           </div>
           <a href="bookings.html" class="btn btn--outline btn--sm">${icon('fileText', 14)} Kelola Semua</a>
         </div>

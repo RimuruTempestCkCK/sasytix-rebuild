@@ -1,110 +1,37 @@
-/* Owner Executive Overrides & Accents */
-.owner-theme .app-sidebar {
-  background: #081B2C;
-}
-
-.owner-theme .sidebar-link.is-active {
-  background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
-  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.35);
-}
-
-.exec-banner {
-  background: linear-gradient(135deg, #0B253C 0%, #123B5D 50%, #0F766E 100%);
-  color: #FFFFFF;
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  margin-bottom: var(--space-6);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-5);
-  box-shadow: 0 4px 20px rgba(11, 37, 60, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  position: relative;
-  overflow: hidden;
-}
-
-.exec-banner::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.2) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.exec-banner-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
-}
-
-.exec-banner-stats {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4);
-  margin-top: var(--space-3);
-}
-
-.exec-banner-stat-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(0, 0, 0, 0.2);
-  padding: 4px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
+/* ==========================================================================
+   OWNER PORTAL OVERRIDES (ADMINATOR TEMPLATE)
+   ========================================================================== */
 .insight-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 12px;
 }
 
 .insight-item {
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-alt);
-  border-left: 3px solid var(--color-secondary);
-  border-top: 1px solid var(--color-border);
-  border-right: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  transition: all 0.2s ease;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--primary);
+  transition: all 0.18s ease;
 }
 
 .insight-item:hover {
-  background: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  border-left-color: var(--color-accent);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  border-left-color: var(--success);
 }
 
 .progress-track {
   width: 100%;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background: var(--color-border);
+  height: 7px;
+  border-radius: 999px;
+  background: var(--bg-muted);
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: var(--radius-full);
-  background: var(--color-secondary);
+  border-radius: 999px;
+  background: var(--primary);
 }

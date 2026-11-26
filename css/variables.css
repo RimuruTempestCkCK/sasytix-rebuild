@@ -11,8 +11,12 @@
   --color-accent-hover: #E55A42;
   --color-accent-soft: #FFF0ED;
 
-  /* Luxury Gradients */
-  --gradient-ocean: linear-gradient(135deg, #0B253C 0%, #123B5D 55%, #0F766E 100%);
+  /* Luxury Gradients (Soft, Maritime & Non-Neon) */
+  --gradient-ocean: linear-gradient(160deg, #0A1E32 0%, #0F2C4A 45%, #13395E 100%);
+  --gradient-sidebar-admin: linear-gradient(180deg, #091C2E 0%, #0D263E 45%, #08192A 100%);
+  --gradient-sidebar-owner: linear-gradient(180deg, #071524 0%, #0B1F33 45%, #06121F 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F8FAFD 100%);
+  --gradient-exec: linear-gradient(135deg, #0B1F35 0%, #0E2A47 45%, #12375C 100%);
   --gradient-accent: linear-gradient(135deg, #F9735B 0%, #E8593F 100%);
   --gradient-surface: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
 

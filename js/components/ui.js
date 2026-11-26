@@ -278,6 +278,9 @@ window.SasyTix = window.SasyTix || {};
   }
 
   function renderDashboardShell(role, activeKey, pageTitle) {
+    const savedTheme = localStorage.getItem('sasytix_admin_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
     const sidebarMount = document.getElementById('app-sidebar-mount');
     const topbarMount = document.getElementById('app-topbar-mount');
     const mainEl = document.querySelector('.app-main');
@@ -286,6 +289,15 @@ window.SasyTix = window.SasyTix || {};
     const { icon } = window.SasyTix.Icons;
     const state = window.SasyTix.Storage.loadState();
     const user = window.SasyTix.Storage.getCurrentUser(state);
+
+    const displayName = user ? user.name : (role === 'owner' ? 'Hendra Wijaya' : 'Fajar Pratama');
+    const roleLabel = role === 'owner' ? 'Managing Director' : 'Operations Admin';
+    const initials = displayName
+      .split(/\s+/)
+      .map(p => p.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
 
     const isCollapsed = localStorage.getItem('sasytix_sidebar_collapsed') === 'true';
     if (shellEl && isCollapsed && window.innerWidth >= 992) {
@@ -311,37 +323,44 @@ window.SasyTix = window.SasyTix || {};
     ];
 
     const menu = role === 'owner' ? ownerMenu : adminMenu;
-    const portalLabel = role === 'owner' ? 'Owner Executive' : 'Admin Operations';
+    const portalLabel = role === 'owner' ? 'Owner Portal' : 'Admin Portal';
 
     if (sidebarMount) {
       sidebarMount.innerHTML = `
         <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
         <aside class="app-sidebar" id="app-sidebar">
           <div class="sidebar-brand">
-            <a href="${root}index.html" class="brand-logo" style="color:#FFFFFF; text-decoration:none; display:flex; align-items:center; gap:10px;">
-              <img src="${root}assets/logos/favicon.png" alt="Sasy.Tix" class="brand-logo-favicon">
-              <span class="brand-logo-text">
-                <img src="${root}assets/logos/logo.png" alt="Sasytix.com" style="height:22px; width:auto; object-fit:contain; display:block;">
-                <span class="brand-logo-sub" style="color:rgba(255,255,255,0.72); font-size:0.6875rem; margin-top:2px;">${portalLabel}</span>
-              </span>
+            <a href="${root}pages/${role}/dashboard.html" class="brand-link">
+              <div class="brand-badge-icon">${icon('anchor', 18)}</div>
+              <div class="brand-text">
+                <div class="brand-name">Sasy.Tix</div>
+                <div class="brand-tag">${portalLabel}</div>
+              </div>
             </a>
-            <button type="button" class="sidebar-collapse-btn" id="sidebar-collapse-btn" title="${isCollapsed ? 'Lebarkan Sidebar' : 'Sembunyikan / Ciutkan Sidebar'}" aria-label="Toggle sidebar collapse">
-              ${icon(isCollapsed ? 'chevronRight' : 'chevronLeft', 16)}
+            <button type="button" class="sidebar-collapse-btn" id="sidebar-collapse-btn" title="${isCollapsed ? 'Lebarkan Sidebar' : 'Ciutkan Sidebar'}" aria-label="Toggle sidebar collapse">
+              ${icon(isCollapsed ? 'chevronRight' : 'chevronLeft', 14)}
             </button>
           </div>
           <nav class="sidebar-nav" aria-label="${portalLabel} navigation">
-            <div class="sidebar-section-label">${portalLabel}</div>
+            <div class="sidebar-section-label">Workspace</div>
             ${menu.map(item => `
               <a href="${item.href}" class="sidebar-link ${activeKey === item.key ? 'is-active' : ''}" data-tooltip="${item.label}">
-                ${icon(item.icon, 18)}
+                ${icon(item.icon, 17)}
                 <span>${item.label}</span>
               </a>
             `).join('')}
           </nav>
           <div class="sidebar-footer">
-            <a href="${root}index.html" class="sidebar-link" data-tooltip="Kembali ke Beranda">
-              ${icon('logOut', 18)}
-              <span>Kembali ke Beranda</span>
+            <div class="workspace-card">
+              <div class="workspace-avatar">${initials}</div>
+              <div class="workspace-text">
+                <div class="workspace-name">${displayName}</div>
+                <div class="workspace-role">${roleLabel}</div>
+              </div>
+            </div>
+            <a href="${root}index.html" class="sidebar-link" data-tooltip="Portal Pembeli">
+              ${icon('logOut', 17)}
+              <span>Ke Portal Pembeli</span>
             </a>
           </div>
         </aside>
@@ -353,39 +372,41 @@ window.SasyTix = window.SasyTix || {};
         <header class="app-topbar">
           <div class="topbar-left">
             <button type="button" class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar" aria-label="Toggle sidebar">
-              ${icon('menu', 20)}
+              ${icon('menu', 19)}
             </button>
-            <div class="topbar-live-status">
-              <span class="live-status-dot"></span>
-              <span>Live System · Batam WIB</span>
-            </div>
-            <div class="breadcrumb">
-              <span class="breadcrumb-pill">${role === 'owner' ? 'OWNER' : 'ADMIN'}</span>
-              <span>/</span>
-              <strong>${pageTitle}</strong>
+            <div class="crumbs">
+              <span>${role === 'owner' ? 'Owner' : 'Admin'}</span>
+              <span class="sep">${icon('chevronRight', 12)}</span>
+              <span class="current">${pageTitle}</span>
             </div>
           </div>
-          <div class="header-actions">
+          <div class="topbar-actions">
+            <button type="button" class="cmd-btn" id="cmd-palette-trigger" aria-label="Quick Search">
+              ${icon('search', 14)}
+              <span>Search...</span>
+              <kbd class="kbd">⌘K</kbd>
+            </button>
+            <button type="button" class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Ganti Tema (Light / Dark)">
+              ${icon(savedTheme === 'dark' ? 'sun' : 'moon', 17)}
+            </button>
             <div class="user-dropdown-wrap" id="admin-user-dropdown-wrap">
-              <button type="button" class="btn btn--outline btn--sm user-dropdown-toggle" id="admin-user-toggle" aria-expanded="false">
-                ${icon('user', 14)}
-                <span class="user-dropdown-name">${user ? user.name : (role === 'owner' ? 'Hendra Wijaya' : 'Fajar Pratama')}</span>
-                ${icon('chevronDown', 12)}
+              <button type="button" class="avatar-btn" id="admin-user-toggle" aria-expanded="false" aria-label="Menu Akun">
+                ${initials}
               </button>
               <div class="user-dropdown-menu" id="admin-user-dropdown-menu" role="menu">
                 <div class="user-dropdown-header">
-                  <div class="user-dropdown-title">${user ? user.name : (role === 'owner' ? 'Hendra Wijaya' : 'Fajar Pratama')}</div>
-                  <div class="user-dropdown-email">${role === 'owner' ? 'Managing Director (Owner)' : 'Operations Team (Admin)'}</div>
+                  <div class="user-dropdown-title">${displayName}</div>
+                  <div class="user-dropdown-email">${roleLabel}</div>
                 </div>
                 <div class="user-dropdown-divider"></div>
                 <a href="${root}index.html" class="user-dropdown-item" role="menuitem">
-                  ${icon('anchor', 14)}
+                  ${icon('anchor', 15)}
                   <span>Ke Portal Pembeli</span>
                 </a>
                 <div class="user-dropdown-divider"></div>
                 <button type="button" class="user-dropdown-item user-dropdown-logout" id="btn-admin-logout" role="menuitem">
-                  ${icon('logOut', 14)}
-                  <span>Keluar (Logout)</span>
+                  ${icon('logOut', 15)}
+                  <span>Logout</span>
                 </button>
               </div>
             </div>
@@ -397,8 +418,87 @@ window.SasyTix = window.SasyTix || {};
     if (mainEl && !mainEl.querySelector('.app-footer')) {
       const footer = document.createElement('footer');
       footer.className = 'app-footer';
-      footer.innerHTML = `<span>© 2026 Sasy.Tix Maritime Portal · ${portalLabel}</span><span>Simulasi Operasional Ferry Batam · Singapura · Malaysia</span>`;
+      footer.innerHTML = `
+        <div>© ${new Date().getFullYear()} <strong>Sasy.Tix</strong> · ${portalLabel}</div>
+        <div class="app-footer-meta">BATAM · SINGAPURA · MALAYSIA</div>
+      `;
       mainEl.appendChild(footer);
+    }
+
+    // Command Palette Modal
+    if (!document.getElementById('cmd-palette-backdrop')) {
+      const pal = document.createElement('div');
+      pal.id = 'cmd-palette-backdrop';
+      pal.className = 'cmd-palette-backdrop';
+      pal.innerHTML = `
+        <div class="cmd-palette-box" role="dialog" aria-label="Quick Navigation">
+          <div class="cmd-palette-input-wrap">
+            ${icon('search', 16)}
+            <input type="text" class="cmd-palette-input" id="cmd-palette-input" placeholder="Cari halaman atau menu..." autocomplete="off">
+            <kbd class="kbd">ESC</kbd>
+          </div>
+          <div class="cmd-palette-list" id="cmd-palette-list"></div>
+        </div>
+      `;
+      document.body.appendChild(pal);
+
+      const palInput = document.getElementById('cmd-palette-input');
+      const palList = document.getElementById('cmd-palette-list');
+
+      function renderPalItems(q) {
+        const term = (q || '').toLowerCase();
+        const filtered = menu.filter(m => m.label.toLowerCase().includes(term));
+        palList.innerHTML = filtered.length
+          ? filtered.map(m => `
+              <a href="${m.href}" class="cmd-palette-item">
+                <span class="cmd-palette-item-left">${icon(m.icon, 15)} <span>${m.label}</span></span>
+                <span class="kbd">${portalLabel}</span>
+              </a>
+            `).join('')
+          : `<div style="padding:16px; text-align:center; color:var(--t-muted); font-size:13px;">Tidak ada menu cocok.</div>`;
+      }
+
+      function openPalette() {
+        pal.classList.add('is-open');
+        palInput.value = '';
+        renderPalItems('');
+        setTimeout(() => palInput.focus(), 40);
+      }
+
+      function closePalette() {
+        pal.classList.remove('is-open');
+      }
+
+      pal.addEventListener('click', (e) => {
+        if (e.target === pal) closePalette();
+      });
+
+      palInput.addEventListener('input', (e) => renderPalItems(e.target.value));
+
+      const cmdBtn = document.getElementById('cmd-palette-trigger');
+      if (cmdBtn) cmdBtn.addEventListener('click', openPalette);
+
+      document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          if (pal.classList.contains('is-open')) closePalette();
+          else openPalette();
+        } else if (e.key === 'Escape' && pal.classList.contains('is-open')) {
+          closePalette();
+        }
+      });
+    }
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('themeToggle');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('sasytix_admin_theme', next);
+        themeToggleBtn.innerHTML = icon(next === 'dark' ? 'sun' : 'moon', 17);
+      });
     }
 
     // Sidebar collapse & drawer events
@@ -414,8 +514,8 @@ window.SasyTix = window.SasyTix || {};
       appShell.classList.toggle('sidebar-collapsed', willBeCollapsed);
       localStorage.setItem('sasytix_sidebar_collapsed', willBeCollapsed ? 'true' : 'false');
       if (collapseBtn) {
-        collapseBtn.innerHTML = icon(willBeCollapsed ? 'chevronRight' : 'chevronLeft', 16);
-        collapseBtn.title = willBeCollapsed ? 'Lebarkan Sidebar' : 'Sembunyikan / Ciutkan Sidebar';
+        collapseBtn.innerHTML = icon(willBeCollapsed ? 'chevronRight' : 'chevronLeft', 14);
+        collapseBtn.title = willBeCollapsed ? 'Lebarkan Sidebar' : 'Ciutkan Sidebar';
       }
     }
 
@@ -511,8 +611,8 @@ window.SasyTix = window.SasyTix || {};
       const yVal = Math.round(minVal + (maxVal - minVal) * (i / gridSteps));
       const yPos = paddingTop + chartH - (i / gridSteps) * chartH;
       gridLines += `
-        <line x1="${paddingLeft}" y1="${yPos}" x2="${width - paddingRight}" y2="${yPos}" stroke="#E2E8F0" stroke-dasharray="4,4" stroke-width="1"/>
-        <text x="${paddingLeft - 12}" y="${yPos + 4}" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="end">${formatValue(yVal)}</text>
+        <line x1="${paddingLeft}" y1="${yPos}" x2="${width - paddingRight}" y2="${yPos}" stroke="var(--border-soft, #E2E8F0)" stroke-dasharray="4,4" stroke-width="1"/>
+        <text x="${paddingLeft - 12}" y="${yPos + 4}" font-size="11" font-weight="600" fill="var(--t-light, #94A3B8)" text-anchor="end">${formatValue(yVal)}</text>
       `;
     }
 
@@ -522,7 +622,7 @@ window.SasyTix = window.SasyTix || {};
     labels.forEach((lbl, idx) => {
       const xPos = paddingLeft + idx * xStep;
       xLabels += `
-        <text x="${xPos}" y="${height - 12}" font-size="12" font-weight="600" fill="#64748B" text-anchor="middle">${lbl}</text>
+        <text x="${xPos}" y="${height - 12}" font-size="12" font-weight="600" fill="var(--t-muted, #64748B)" text-anchor="middle">${lbl}</text>
       `;
     });
 
@@ -555,8 +655,9 @@ window.SasyTix = window.SasyTix || {};
         areaMarkup = `
           <defs>
             <linearGradient id="areaGrad-${id}-${sIdx}" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="${s.color}" stop-opacity="0.25"/>
-              <stop offset="100%" stop-color="${s.color}" stop-opacity="0.01"/>
+              <stop offset="0%" stop-color="${s.color}" stop-opacity="0.14"/>
+              <stop offset="65%" stop-color="${s.color}" stop-opacity="0.03"/>
+              <stop offset="100%" stop-color="${s.color}" stop-opacity="0.0"/>
             </linearGradient>
           </defs>
           <path d="${pathD} L ${lastP.x} ${bottomY} L ${firstP.x} ${bottomY} Z" fill="url(#areaGrad-${id}-${sIdx})" />
@@ -569,7 +670,7 @@ window.SasyTix = window.SasyTix || {};
       const dots = points.map(p => `
         <g class="chart-interactive-point" data-series="${s.name}" data-month="${p.label}" data-val="${formatValue(p.val)}${s.unit || ''}">
           <circle cx="${p.x}" cy="${p.y}" r="8" fill="${s.color}" fill-opacity="0.15" class="chart-point-pulse"/>
-          <circle cx="${p.x}" cy="${p.y}" r="4.5" fill="#FFFFFF" stroke="${s.color}" stroke-width="2.5" class="chart-point-dot"/>
+          <circle cx="${p.x}" cy="${p.y}" r="4.5" fill="var(--bg-card, #FFFFFF)" stroke="${s.color}" stroke-width="2.5" class="chart-point-dot"/>
         </g>
       `).join('');
 

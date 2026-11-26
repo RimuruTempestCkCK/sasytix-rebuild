@@ -45,29 +45,25 @@
       id: 'owner-revenue-line-chart',
       labels: months,
       series: [
-        { name: 'Realisasi Revenue', data: revData, color: '#10B981', unit: ' Jt IDR', showArea: true },
-        { name: 'Target Anggaran', data: targetData, color: '#F59E0B', unit: ' Jt IDR', dashed: true, showArea: false }
+        { name: 'Realisasi Revenue', data: revData, color: '#059669', unit: ' Jt IDR', showArea: true },
+        { name: 'Target Anggaran', data: targetData, color: '#D97706', unit: ' Jt IDR', dashed: true, showArea: false }
       ],
       height: 230,
       formatValue: (v) => 'Rp' + v + 'M'
     });
 
     root.innerHTML = `
-      <div class="exec-banner">
+      <section class="page-hero">
         <div>
-          <div class="exec-banner-badge">${icon('shield', 14)} Executive Summary · Sasy.Tix Maritime Group</div>
-          <h1 style="font-size:1.5rem; font-weight:800; margin-top:6px; line-height:1.2;">Performa Koridor Batam – Singapura – Malaysia</h1>
-          <div class="exec-banner-stats">
-            <span class="exec-banner-stat-chip">${icon('trendingUp', 14)} Target Semester Tercapai 107.8%</span>
-            <span class="exec-banner-stat-chip">${icon('ship', 14)} 4 Koridor Pelayaran Internasional</span>
-            <span class="exec-banner-stat-chip">${icon('calendar', 14)} Periode: Semester II 2026</span>
-          </div>
+          <span class="eyebrow">Executive Summary · Sasy.Tix Maritime Group</span>
+          <h1 class="page-hero-title">Performa Koridor Batam – Singapura – Malaysia</h1>
+          <p class="page-hero-sub">Target Semester Tercapai <strong>107.8%</strong> · 4 Koridor Pelayaran Internasional · Semester II 2026</p>
         </div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <a href="analytics.html" class="btn btn--accent btn--sm">${icon('barChart', 14)} Analitik Rute</a>
-          <a href="financial.html" class="btn btn--outline btn--sm" style="background:rgba(255,255,255,0.14); color:#FFFFFF; border-color:rgba(255,255,255,0.3);">${icon('creditCard', 14)} Laporan Finansial</a>
+        <div class="page-hero-actions">
+          <a href="analytics.html" class="btn btn--primary">${icon('barChart', 14)} Analitik Rute</a>
+          <a href="financial.html" class="btn btn--outline">${icon('creditCard', 14)} Laporan Finansial</a>
         </div>
-      </div>
+      </section>
 
       <div class="kpi-grid">
         <div class="kpi-card">
@@ -136,8 +132,8 @@
             </div>
             <div class="chart-controls">
               <div class="chart-legend">
-                <span class="legend-item"><span class="legend-dot" style="background:#10B981;"></span> Realisasi Revenue</span>
-                <span class="legend-item"><span class="legend-dot" style="background:#F59E0B;"></span> Target Anggaran</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#059669;"></span> Realisasi Revenue</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#D97706;"></span> Target Anggaran</span>
               </div>
               <div class="chart-tab-group">
                 <button type="button" class="chart-tab-btn is-active" id="tab-owner-line">${icon('lineChart', 14)} Line</button>
@@ -153,7 +149,7 @@
               <div class="chart-bars">
                 ${st.monthlyTrend.map(m => `
                   <div class="chart-bar-col">
-                    <div class="chart-bar chart-bar--teal" style="height:${Math.round((m.revenueM / maxRev) * 160)}px;" title="Rp${m.revenueM} Jt"></div>
+                    <div class="chart-bar chart-bar--emerald" style="height:${Math.round((m.revenueM / maxRev) * 160)}px;" title="Rp${m.revenueM} Jt"></div>
                     <span class="chart-bar-label">${m.month}</span>
                   </div>
                 `).join('')}
@@ -162,11 +158,11 @@
           </div>
         </div>
 
-        <div class="card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 14px rgba(11,37,60,0.02);">
-          <div class="card-header" style="background:#FAFCFE; border-bottom:1px solid var(--color-border); padding:var(--space-5) var(--space-6);">
+        <div class="card">
+          <div class="card-header">
             <div>
-              <h2 class="card-title" style="font-size:1.0625rem;">Executive Business Insights</h2>
-              <div class="text-xs text-muted" style="margin-top:2px;">Analisis Strategis &amp; Tren Pertumbuhan</div>
+              <span class="eyebrow">Insights</span>
+              <h2 class="card-title">Executive Business Insights</h2>
             </div>
             <span class="badge badge--primary">Q4 2026</span>
           </div>
