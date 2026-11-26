@@ -2,9 +2,6 @@
   const { UI, Auth, Icons } = window.SasyTix;
 
   document.addEventListener('DOMContentLoaded', () => {
-    UI.renderPublicHeader('auth');
-    UI.renderPublicFooter();
-
     const params = new URLSearchParams(window.location.search);
     const bodyPage = document.body.getAttribute('data-auth-page');
     let mode = params.get('mode') || bodyPage || 'login';
