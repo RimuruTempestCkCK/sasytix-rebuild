@@ -4,21 +4,21 @@ window.SasyTix.MOCK_DATA = {
   users: [
     {
       id: 'usr-buyer-1',
-      name: 'Rina Kusuma',
-      email: 'buyer@demo.com',
+      name: 'Hendra Wijaya',
+      email: 'hendra.wijaya@gmail.com',
       password: 'demo123',
       role: 'buyer',
       phone: '+62 812-7700-1122',
       status: 'active',
       savedPassengers: [
         {
-          fullName: 'Rina Kusuma',
-          gender: 'Female',
-          dob: '1995-04-12',
+          fullName: 'Hendra Wijaya',
+          gender: 'Male',
+          dob: '1992-06-15',
           nationality: 'Indonesia',
           passportNumber: 'C8842190',
           passportExpiry: '2030-04-12',
-          email: 'buyer@demo.com',
+          email: 'hendra.wijaya@gmail.com',
           phone: '+62 812-7700-1122'
         }
       ],
@@ -272,13 +272,13 @@ window.SasyTix.MOCK_DATA = {
       travelDate: '2026-11-27',
       passengers: [
         {
-          fullName: 'Rina Kusuma',
-          gender: 'Female',
-          dob: '1995-04-12',
+          fullName: 'Hendra Wijaya',
+          gender: 'Male',
+          dob: '1992-06-15',
           nationality: 'Indonesia',
           passportNumber: 'C8842190',
           passportExpiry: '2030-04-12',
-          email: 'buyer@demo.com',
+          email: 'hendra.wijaya@gmail.com',
           phone: '+62 812-7700-1122',
           seat: 'A12'
         }
@@ -305,13 +305,13 @@ window.SasyTix.MOCK_DATA = {
       travelDate: '2026-11-28',
       passengers: [
         {
-          fullName: 'Rina Kusuma',
-          gender: 'Female',
-          dob: '1995-04-12',
+          fullName: 'Hendra Wijaya',
+          gender: 'Male',
+          dob: '1992-06-15',
           nationality: 'Indonesia',
           passportNumber: 'C8842190',
           passportExpiry: '2030-04-12',
-          email: 'buyer@demo.com',
+          email: 'hendra.wijaya@gmail.com',
           phone: '+62 812-7700-1122',
           seat: 'B04'
         },

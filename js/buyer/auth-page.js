@@ -67,11 +67,11 @@
       if (!listEl) return;
 
       listEl.innerHTML = `
-        <button type="button" class="google-account-item" data-name="Rina Kusuma" data-email="rina.kusuma@gmail.com" data-avatar="RK">
-          <div class="google-account-avatar">RK</div>
+        <button type="button" class="google-account-item" data-name="Hendra Wijaya" data-email="hendra.wijaya@gmail.com" data-avatar="HW">
+          <div class="google-account-avatar">HW</div>
           <div class="google-account-info">
-            <div class="google-account-name">Rina Kusuma</div>
-            <div class="google-account-email">rina.kusuma@gmail.com</div>
+            <div class="google-account-name">Hendra Wijaya</div>
+            <div class="google-account-email">hendra.wijaya@gmail.com</div>
           </div>
           <span class="google-account-badge">Akun Utama</span>
         </button>
@@ -176,7 +176,7 @@
           <form id="form-login" style="display:grid; gap:14px;">
             <div class="form-group">
               <label class="form-label" for="l-email">Alamat Email</label>
-              <input type="email" id="l-email" class="form-control" value="buyer@demo.com" placeholder="nama@email.com" required autocomplete="username">
+              <input type="email" id="l-email" class="form-control" value="hendra.wijaya@gmail.com" placeholder="nama@email.com" required autocomplete="username">
             </div>
             <div class="form-group">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
@@ -259,7 +259,7 @@
           <form id="form-register" style="display:grid; gap:14px;">
             <div class="form-group">
               <label class="form-label" for="r-name">Nama Lengkap</label>
-              <input type="text" id="r-name" class="form-control" placeholder="Contoh: Rina Kusuma" required>
+              <input type="text" id="r-name" class="form-control" placeholder="Contoh: Hendra Wijaya" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="r-email">Alamat Email</label>

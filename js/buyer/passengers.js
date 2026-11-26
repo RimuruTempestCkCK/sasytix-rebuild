@@ -29,13 +29,13 @@
     document.getElementById('btn-autofill-passenger')?.addEventListener('click', () => {
       const user = Storage.getCurrentUser(Storage.loadState());
       const saved = user?.savedPassengers?.[0] || {
-        fullName: user?.name || 'Rina Kusuma',
-        gender: 'Female',
-        dob: '1995-04-12',
+        fullName: user?.name || 'Hendra Wijaya',
+        gender: 'Male',
+        dob: '1992-06-15',
         nationality: 'Indonesia',
         passportNumber: 'C8842190',
         passportExpiry: '2030-04-12',
-        email: user?.email || 'buyer@demo.com',
+        email: user?.email || 'hendra.wijaya@gmail.com',
         phone: user?.phone || '+62 812-7700-1122'
       };
       fillPassengerBlock(0, saved);
@@ -110,7 +110,7 @@
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
             <div class="form-group">
               <label class="form-label" for="p-${i}-name">Nama Lengkap (Sesuai Paspor) *</label>
-              <input type="text" id="p-${i}-name" class="form-control" value="${p.fullName || ''}" placeholder="Contoh: Rina Kusuma" required>
+              <input type="text" id="p-${i}-name" class="form-control" value="${p.fullName || ''}" placeholder="Contoh: Hendra Wijaya" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="p-${i}-gender">Jenis Kelamin *</label>

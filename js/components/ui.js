@@ -127,12 +127,9 @@ window.SasyTix = window.SasyTix || {};
             <a href="${root}pages/buyer/profile.html" class="nav-link ${activeKey === 'profile' ? 'is-active' : ''}">Profil</a>
           </nav>
           <div class="header-actions">
-            ${user ? `
-              <a href="${root}pages/buyer/profile.html" class="btn btn--outline btn--sm btn-desktop-only">${icon('user', 15)} ${user.name}</a>
-            ` : `
-              <a href="${root}pages/buyer/login.html" class="btn btn--outline btn--sm btn-desktop-only">Masuk</a>
-              <a href="${root}pages/buyer/register.html" class="btn btn--primary btn--sm btn-desktop-only">Daftar</a>
-            `}
+            <a href="${root}pages/buyer/profile.html" class="btn btn--outline btn--sm btn-desktop-only" id="header-user-btn" aria-label="Profil Hendra Wijaya">
+              ${icon('user', 15)} ${user ? user.name : 'Hendra Wijaya'}
+            </a>
             <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Buka menu navigasi" aria-expanded="false">
               ${icon('menu', 20)}
             </button>
@@ -146,8 +143,9 @@ window.SasyTix = window.SasyTix || {};
         <a href="${root}pages/buyer/ticket.html" class="nav-link">Tiket Saya</a>
         <a href="${root}pages/buyer/profile.html" class="nav-link">Profil</a>
         <hr style="border:none;border-top:1px solid var(--color-border);">
-        <a href="${root}pages/buyer/login.html" class="btn btn--outline btn--block">Masuk / Ganti Akun</a>
-        <a href="${root}pages/buyer/register.html" class="btn btn--primary btn--block">Daftar Akun Baru</a>
+        <a href="${root}pages/buyer/profile.html" class="btn btn--outline btn--block">
+          ${icon('user', 15)} ${user ? user.name : 'Hendra Wijaya'}
+        </a>
       </div>
     `;
 
@@ -158,6 +156,16 @@ window.SasyTix = window.SasyTix || {};
 
     const toggle = document.getElementById('mobile-menu-toggle');
     const drawer = document.getElementById('mobile-drawer');
+    const headerUserBtn = document.getElementById('header-user-btn');
+
+    if (headerUserBtn && !user) {
+      headerUserBtn.addEventListener('click', () => {
+        const st = window.SasyTix.Storage.loadState();
+        st.currentUserId = 'usr-buyer-1';
+        window.SasyTix.Storage.saveState(st);
+      });
+    }
+
     if (toggle && drawer) {
       toggle.addEventListener('click', () => {
         const isOpen = drawer.classList.toggle('is-open');

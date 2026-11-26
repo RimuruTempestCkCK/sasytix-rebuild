@@ -1,7 +1,7 @@
 window.SasyTix = window.SasyTix || {};
 
 (function () {
-  const STORAGE_KEY = 'sasytix_rebuild_state_v1';
+  const STORAGE_KEY = 'sasytix_rebuild_state_v2';
 
   function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
@@ -33,12 +33,23 @@ window.SasyTix = window.SasyTix || {};
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        const fresh = getInitialState();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh));
-        return fresh;
+      let state = raw ? JSON.parse(raw) : getInitialState();
+
+      // Ensure primary buyer user is Hendra Wijaya
+      const buyer = state.users?.find(u => u.id === 'usr-buyer-1');
+      if (buyer) {
+        buyer.name = 'Hendra Wijaya';
+        buyer.email = 'hendra.wijaya@gmail.com';
+        if (buyer.savedPassengers?.[0]) {
+          buyer.savedPassengers[0].fullName = 'Hendra Wijaya';
+          buyer.savedPassengers[0].gender = 'Male';
+          buyer.savedPassengers[0].email = 'hendra.wijaya@gmail.com';
+        }
       }
-      return JSON.parse(raw);
+      if (!state.currentUserId || state.currentUserId === 'usr-buyer-1') {
+        state.currentUserId = 'usr-buyer-1';
+      }
+      return state;
     } catch (err) {
       console.error('Failed to read LocalStorage state, resetting:', err);
       const fresh = getInitialState();
