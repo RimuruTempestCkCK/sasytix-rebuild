@@ -43,7 +43,7 @@
 
     document.getElementById('btn-logout')?.addEventListener('click', () => {
       Auth.logout();
-      window.location.href = 'auth.html?mode=login';
+      window.location.href = 'login.html';
     });
   });
 })();
