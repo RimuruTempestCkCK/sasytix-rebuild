@@ -60,10 +60,6 @@
           <h1 class="page-hero-title">Dashboard Operasional</h1>
           <p class="page-hero-sub">Ringkasan pemesanan tiket, verifikasi pembayaran, dan jadwal keberangkatan aktif.</p>
         </div>
-        <div class="page-hero-actions">
-          <a href="payments.html" class="btn btn--outline">${icon('creditCard', 14)} Verifikasi Pembayaran</a>
-          <a href="bookings.html" class="btn btn--primary">${icon('fileText', 14)} Kelola Booking</a>
-        </div>
       </section>
 
       <div class="kpi-grid">

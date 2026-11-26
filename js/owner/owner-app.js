@@ -58,10 +58,6 @@
           <h1 class="page-hero-title">Performa Koridor Batam – Singapura – Malaysia</h1>
           <p class="page-hero-sub">Target Semester Tercapai <strong>107.8%</strong> · 4 Koridor Pelayaran Internasional · Semester II 2026</p>
         </div>
-        <div class="page-hero-actions">
-          <a href="analytics.html" class="btn btn--primary">${icon('barChart', 14)} Analitik Rute</a>
-          <a href="financial.html" class="btn btn--outline">${icon('creditCard', 14)} Laporan Finansial</a>
-        </div>
       </section>
 
       <div class="kpi-grid">
