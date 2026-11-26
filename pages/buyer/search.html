@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hasil Pencarian Jadwal — Sasy.Tix Maritime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div id="demo-bar-mount"></div>
+  <div id="site-header-mount"></div>
+
+  <main class="section" style="padding-top:var(--space-8);">
+    <div class="container">
+      <div class="flow-stepper">
+        <div class="flow-step is-active"><span class="flow-step-dot">1</span> Pilih Jadwal</div>
+        <div class="flow-step"><span class="flow-step-dot">2</span> Data Penumpang</div>
+        <div class="flow-step"><span class="flow-step-dot">3</span> Konfirmasi</div>
+        <div class="flow-step"><span class="flow-step-dot">4</span> Pembayaran</div>
+      </div>
+
+      <div class="card" style="margin-bottom:var(--space-6);">
+        <div class="card-body">
+          <form id="filter-search-form" class="search-grid">
+            <div class="form-group">
+              <label class="form-label" for="f-origin">Asal</label>
+              <select id="f-origin" class="form-control">
+                <option value="">Semua Asal</option>
+                <option value="Batam">Batam</option>
+                <option value="Singapura">Singapura</option>
+                <option value="Malaysia">Malaysia</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-destination">Tujuan</label>
+              <select id="f-destination" class="form-control">
+                <option value="">Semua Tujuan</option>
+                <option value="Singapura">Singapura</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="Batam">Batam</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-date">Tanggal</label>
+              <input type="date" id="f-date" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-operator">Operator</label>
+              <select id="f-operator" class="form-control">
+                <option value="">Semua Operator</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-pax">Penumpang</label>
+              <select id="f-pax" class="form-control">
+                <option value="1">1 Penumpang</option>
+                <option value="2">2 Penumpang</option>
+                <option value="3">3 Penumpang</option>
+                <option value="4">4 Penumpang</option>
+                <option value="5">5 Penumpang</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn--primary">Terapkan</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-bottom:var(--space-4);">
+        <div>
+          <h1 class="section-title" style="font-size:1.5rem;">Jadwal Kapal Tersedia</h1>
+          <p class="text-sm text-muted" id="results-summary">Memuat jadwal pelayaran...</p>
+        </div>
+      </div>
+
+      <div class="schedule-list" id="search-results-list"></div>
+    </div>
+  </main>
+
+  <div id="site-footer-mount"></div>
+
+  <script src="../../js/mock-data.js"></script>
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/components/icons.js"></script>
+  <script src="../../js/components/ui.js"></script>
+  <script src="../../js/buyer/search.js"></script>
+</body>
+</html>

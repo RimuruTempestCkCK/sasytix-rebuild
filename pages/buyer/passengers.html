@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Penumpang — Sasy.Tix Maritime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div id="demo-bar-mount"></div>
+  <div id="site-header-mount"></div>
+
+  <main class="section" style="padding-top:var(--space-8);">
+    <div class="container">
+      <div class="flow-stepper">
+        <div class="flow-step is-done"><span class="flow-step-dot">✓</span> Pilih Jadwal</div>
+        <div class="flow-step is-active"><span class="flow-step-dot">2</span> Data Penumpang</div>
+        <div class="flow-step"><span class="flow-step-dot">3</span> Konfirmasi</div>
+        <div class="flow-step"><span class="flow-step-dot">4</span> Pembayaran</div>
+      </div>
+
+      <div class="checkout-grid">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <h1 class="card-title" style="font-size:1.25rem;">Informasi Penumpang</h1>
+              <button type="button" class="btn btn--outline btn--sm" id="btn-autofill-passenger">Isi dari Profil Demo</button>
+            </div>
+            <div class="card-body">
+              <form id="passenger-form" novalidate>
+                <div id="passengers-fields-container" style="display:flex; flex-direction:column; gap:24px;"></div>
+                <div style="margin-top:24px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                  <a href="search.html" class="btn btn--outline">Kembali ke Jadwal</a>
+                  <button type="submit" class="btn btn--primary btn--lg">Lanjut ke Konfirmasi</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <aside class="summary-sticky" id="trip-summary-mount"></aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-mount"></div>
+
+  <script src="../../js/mock-data.js"></script>
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/components/icons.js"></script>
+  <script src="../../js/components/ui.js"></script>
+  <script src="../../js/buyer/passengers.js"></script>
+</body>
+</html>

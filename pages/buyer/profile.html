@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Akun — Sasy.Tix Maritime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/reset.css">
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/buyer.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+  <div id="demo-bar-mount"></div>
+  <div id="site-header-mount"></div>
+
+  <main class="section" style="padding-top:var(--space-8);">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">Pengaturan Akun</span>
+          <h1 class="section-title">Profil Pengguna</h1>
+        </div>
+        <button type="button" id="btn-logout" class="btn btn--outline">Keluar (Logout)</button>
+      </div>
+
+      <div class="checkout-grid">
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Informasi Akun</h2></div>
+            <div class="card-body">
+              <form id="profile-form" style="display:grid; gap:14px;">
+                <div class="form-group">
+                  <label class="form-label" for="prof-name">Nama Lengkap</label>
+                  <input type="text" id="prof-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-email">Email</label>
+                  <input type="email" id="prof-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prof-phone">Nomor WhatsApp</label>
+                  <input type="tel" id="prof-phone" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn--primary" style="width:fit-content;">Simpan Perubahan</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Ubah Kata Sandi (Simulasi UI)</h2></div>
+            <div class="card-body">
+              <form id="password-form" style="display:grid; gap:14px;">
+                <div class="form-group">
+                  <label class="form-label" for="pwd-old">Kata Sandi Saat Ini</label>
+                  <input type="password" id="pwd-old" class="form-control" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="pwd-new">Kata Sandi Baru</label>
+                  <input type="password" id="pwd-new" class="form-control" placeholder="Minimal 6 karakter">
+                </div>
+                <button type="submit" class="btn btn--outline" style="width:fit-content;">Perbarui Kata Sandi</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <aside style="display:flex; flex-direction:column; gap:20px;">
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Penumpang Tersimpan</h2></div>
+            <div class="card-body" id="saved-passengers-mount"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Preferensi Notifikasi</h2></div>
+            <div class="card-body" style="display:flex; flex-direction:column; gap:10px;">
+              <label style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="pref-email" checked> <span>Notifikasi Invoice via Email</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="pref-wa" checked> <span>Update Boarding Pass via WhatsApp</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:10px;">
+                <input type="checkbox" id="pref-promo"> <span>Info Promo Rute Batam–Singapura</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Syarat &amp; Ketentuan</h2></div>
+            <div class="card-body text-sm text-muted">
+              Prototype ini mensimulasikan alur pemesanan tiket feri tanpa transaksi keuangan sungguhan. Seluruh data disimpan secara lokal pada browser Anda.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-mount"></div>
+
+  <script src="../../js/mock-data.js"></script>
+  <script src="../../js/storage.js"></script>
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/components/icons.js"></script>
+  <script src="../../js/components/ui.js"></script>
+  <script src="../../js/buyer/profile.js"></script>
+</body>
+</html>

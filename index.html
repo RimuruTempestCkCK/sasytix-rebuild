@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sasy.Tix Maritime — Pemesanan Tiket Feri Batam, Singapura &amp; Malaysia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/buyer.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div id="demo-bar-mount"></div>
+  <div id="site-header-mount"></div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <img src="assets/images/hero/hero-ferry.jpg" alt="Kapal feri cepat berlayar di perairan Batam menuju Singapura dan Malaysia" class="hero-bg">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <span class="hero-badge">Batam · Singapura · Malaysia Ferry Portal</span>
+        <h1 class="hero-title">Your Journey Across The Sea Starts Here</h1>
+        <p class="hero-subtitle">
+          Pesan tiket kapal feri internasional dari Batam menuju Singapura dan Malaysia dengan jadwal terkurasi, informasi terminal yang jelas, dan boarding pass digital instan.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="#booking-search" class="btn btn--accent btn--lg">Cari Jadwal Feri</a>
+          <a href="pages/buyer/bookings.html" class="btn btn--outline btn--lg" style="background:rgba(255,255,255,0.12); color:#FFFFFF; border-color:rgba(255,255,255,0.35);">Cek My Booking</a>
+        </div>
+        <div class="hero-metrics">
+          <div>
+            <div class="hero-metric-val">4 Koridor Utama</div>
+            <div class="hero-metric-lbl">Batam ↔ Singapura &amp; Malaysia</div>
+          </div>
+          <div>
+            <div class="hero-metric-val">4 Operator Resmi</div>
+            <div class="hero-metric-lbl">Batam Fast, Sindo, Majestic, Horizon</div>
+          </div>
+          <div>
+            <div class="hero-metric-val">45–105 Menit</div>
+            <div class="hero-metric-lbl">Pelayaran Cepat &amp; Nyaman</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Search Form -->
+    <section class="search-widget-wrap" id="booking-search" aria-label="Pencarian tiket feri">
+      <div class="container">
+        <div class="search-widget">
+          <div class="search-tabs">
+            <div>
+              <span class="eyebrow" style="margin-bottom:2px;">Pencarian Tiket</span>
+              <h2 style="font-size:1.25rem; font-weight:700;">Temukan Jadwal Keberangkatan</h2>
+            </div>
+            <div class="trip-toggle" role="group" aria-label="Jenis perjalanan">
+              <button type="button" class="trip-toggle-btn is-active" data-trip="one_way">Sekali Jalan</button>
+              <button type="button" class="trip-toggle-btn" data-trip="round_trip">Pulang Pergi</button>
+            </div>
+          </div>
+
+          <form id="home-search-form" class="search-grid">
+            <div class="form-group">
+              <label class="form-label" for="search-origin">Pelabuhan Asal (Origin)</label>
+              <select id="search-origin" class="form-control" required>
+                <option value="Batam">Batam (Batam Centre / Harbour Bay / Nongsapura)</option>
+                <option value="Singapura">Singapura (HarbourFront / Tanah Merah)</option>
+                <option value="Malaysia">Malaysia (Puteri Harbour / Stulang Laut)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="search-destination">Tujuan (Destination)</label>
+              <select id="search-destination" class="form-control" required>
+                <option value="Singapura">Singapura (HarbourFront / Tanah Merah)</option>
+                <option value="Malaysia">Malaysia (Puteri Harbour / Stulang Laut)</option>
+                <option value="Batam">Batam (Batam Centre / Harbour Bay)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="search-date">Tanggal Berangkat</label>
+              <input type="date" id="search-date" class="form-control" value="2026-11-27" required>
+            </div>
+
+            <div class="form-group" id="return-date-group" style="display:none;">
+              <label class="form-label" for="search-return-date">Tanggal Pulang</label>
+              <input type="date" id="search-return-date" class="form-control" value="2026-11-29">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="search-pax">Penumpang</label>
+              <select id="search-pax" class="form-control">
+                <option value="1">1 Penumpang</option>
+                <option value="2">2 Penumpang</option>
+                <option value="3">3 Penumpang</option>
+                <option value="4">4 Penumpang</option>
+                <option value="5">5 Penumpang</option>
+                <option value="6">6 Penumpang</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--lg">Cari Jadwal</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Route Options -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Koridor Pelayaran</span>
+            <h2 class="section-title">Pilihan Rute Feri Internasional</h2>
+            <p class="section-subtitle">Pilih rute dua arah antara Batam, Singapura, dan Johor Malaysia dengan terminal keberangkatan yang terintegrasi.</p>
+          </div>
+          <a href="pages/buyer/search.html" class="btn btn--outline">Lihat Semua Jadwal</a>
+        </div>
+        <div class="routes-grid" id="home-routes-grid"></div>
+      </div>
+    </section>
+
+    <!-- Featured Schedules -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Keberangkatan Tersedia</span>
+            <h2 class="section-title">Jadwal Feri Terdekat</h2>
+            <p class="section-subtitle">Kuota kursi dan tarif per orang untuk satu kali pelayaran. Klik pilih untuk melanjutkan pemesanan.</p>
+          </div>
+        </div>
+        <div class="schedule-list" id="home-schedules-list"></div>
+      </div>
+    </section>
+
+    <!-- Popular Destinations -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Destinasi Utama</span>
+            <h2 class="section-title">Jelajahi Batam, Singapura &amp; Malaysia</h2>
+            <p class="section-subtitle">Akses pelabuhan strategis untuk perjalanan bisnis, liburan akhir pekan, maupun kunjungan keluarga.</p>
+          </div>
+        </div>
+        <div class="destinations-grid">
+          <article class="dest-card">
+            <img src="assets/images/destinations/singapore.jpg" alt="Pemandangan Marina Bay Singapura di waktu senja" class="dest-card-img">
+            <div class="dest-card-body">
+              <span class="badge badge--primary" style="width:fit-content;">HarbourFront &amp; Tanah Merah</span>
+              <h3 style="font-size:1.25rem; font-weight:700;">Singapura</h3>
+              <p class="text-sm text-muted">Pelayaran cepat 45–50 menit dari Batam Centre dan Nongsapura langsung menuju pusat kota dan Sentosa.</p>
+              <a href="pages/buyer/search.html?origin=Batam&destination=Singapura" class="btn btn--outline btn--sm" style="margin-top:auto; width:fit-content;">Cari Tiket ke Singapura</a>
+            </div>
+          </article>
+
+          <article class="dest-card">
+            <img src="assets/images/destinations/malaysia.jpg" alt="Pemandangan marina Puteri Harbour Johor Malaysia" class="dest-card-img">
+            <div class="dest-card-body">
+              <span class="badge badge--info" style="width:fit-content;">Puteri Harbour &amp; Stulang Laut</span>
+              <h3 style="font-size:1.25rem; font-weight:700;">Johor, Malaysia</h3>
+              <p class="text-sm text-muted">Akses langsung ke Iskandar Puteri dan Johor Bahru dari Harbour Bay serta Batam Centre dalam 90–105 menit.</p>
+              <a href="pages/buyer/search.html?origin=Batam&destination=Malaysia" class="btn btn--outline btn--sm" style="margin-top:auto; width:fit-content;">Cari Tiket ke Malaysia</a>
+            </div>
+          </article>
+
+          <article class="dest-card">
+            <img src="assets/images/destinations/batam.jpg" alt="Jembatan Barelang dan pesisir pulau Batam" class="dest-card-img">
+            <div class="dest-card-body">
+              <span class="badge badge--success" style="width:fit-content;">Batam Centre, Harbour Bay, Nongsapura</span>
+              <h3 style="font-size:1.25rem; font-weight:700;">Batam, Indonesia</h3>
+              <p class="text-sm text-muted">Hub pelabuhan internasional utama di Kepulauan Riau dengan koneksi pulang-pergi harian dari Singapura dan Malaysia.</p>
+              <a href="pages/buyer/search.html?origin=Singapura&destination=Batam" class="btn btn--outline btn--sm" style="margin-top:auto; width:fit-content;">Cari Tiket ke Batam</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Advantages & Cabin Preview -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="checkout-grid" style="align-items:center;">
+          <div>
+            <span class="eyebrow">Keunggulan Layanan</span>
+            <h2 class="section-title">Standar Baru Pemesanan Tiket Feri</h2>
+            <p class="section-subtitle" style="margin-bottom:24px;">
+              Dirancang khusus untuk penumpang lintas negara agar setiap tahap — mulai dari cek kuota, pengisian paspor, hingga verifikasi pembayaran — berjalan jelas dan transparan.
+            </p>
+            <div style="display:grid; gap:16px;">
+              <div class="card card-body" style="padding:16px;">
+                <strong style="display:block; margin-bottom:4px;">Transparansi Kuota &amp; Status Tiket</strong>
+                <span class="text-sm text-muted">Setiap pesanan memiliki kode referensi unik dan status verifikasi pembayaran yang dapat dipantau secara real-time di dashboard.</span>
+              </div>
+              <div class="card card-body" style="padding:16px;">
+                <strong style="display:block; margin-bottom:4px;">Boarding Pass Digital Siap Pakai</strong>
+                <span class="text-sm text-muted">Setelah pembayaran terverifikasi, tiket digital lengkap dengan QR code simulasi dan panduan check-in terminal langsung tersedia.</span>
+              </div>
+              <div class="card card-body" style="padding:16px;">
+                <strong style="display:block; margin-bottom:4px;">Armada Operator Terpercaya</strong>
+                <span class="text-sm text-muted">Bermitra dengan Batam Fast Ferry, Sindo Ferry, Majestic Fast Ferry, dan Horizon Fast Ferry.</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid; gap:16px;">
+            <img src="assets/images/ferry/fast-ferry-cabin.jpg" alt="Interior kabin penumpang kapal feri cepat dengan jendela panorama laut" style="border-radius:var(--radius-lg); height:240px; width:100%; object-fit:cover; border:1px solid var(--color-border);">
+            <img src="assets/images/terminals/harbour-terminal.jpg" alt="Gedung terminal pelabuhan feri internasional modern di tepi laut" style="border-radius:var(--radius-lg); height:200px; width:100%; object-fit:cover; border:1px solid var(--color-border);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Process -->
+    <section class="section" id="cara-pesan">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Proses Pemesanan</span>
+            <h2 class="section-title">3 Langkah Mudah Menuju Pelabuhan</h2>
+          </div>
+        </div>
+        <div class="steps-grid">
+          <article class="step-item">
+            <div class="step-num">01</div>
+            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Pilih Rute &amp; Jadwal</h3>
+            <p class="text-sm text-muted">Tentukan asal, tujuan, tanggal keberangkatan, dan jumlah penumpang, lalu pilih kapal yang sesuai.</p>
+          </article>
+          <article class="step-item">
+            <div class="step-num">02</div>
+            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Lengkapi Data Paspor</h3>
+            <p class="text-sm text-muted">Isi data penumpang sesuai paspor aktif yang berlaku minimal 6 bulan sebelum tanggal keberangkatan.</p>
+          </article>
+          <article class="step-item">
+            <div class="step-num">03</div>
+            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:8px;">Bayar &amp; Terima Tiket</h3>
+            <p class="text-sm text-muted">Selesaikan pembayaran simulasi (QRIS/VA/Transfer) dan akses boarding pass digital Anda di menu My Booking.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--alt" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Pusat Bantuan</span>
+            <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+          </div>
+        </div>
+        <div class="faq-list" id="home-faq-list">
+          <div class="faq-item is-open">
+            <button type="button" class="faq-question">
+              <span>Berapa lama sebelum keberangkatan saya harus tiba di terminal?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Penumpang disarankan tiba di terminal feri minimal 60 menit sebelum jadwal keberangkatan untuk proses check-in boarding pass dan pemeriksaan imigrasi.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span>Apakah paspor wajib masih berlaku minimal 6 bulan?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Ya. Untuk perjalanan internasional antara Indonesia (Batam), Singapura, dan Malaysia, paspor wajib memiliki masa berlaku minimal 6 bulan sejak tanggal kedatangan.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span>Bagaimana cara mencoba tampilan Admin dan Owner di prototype ini?</span>
+              <span>+</span>
+            </button>
+            <div class="faq-answer">
+              Gunakan Demo Mode Bar di bagian paling atas halaman untuk berpindah peran secara instan antara Buyer, Admin Operations, dan Owner Executive.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer-mount"></div>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/components/icons.js"></script>
+  <script src="js/components/ui.js"></script>
+  <script src="js/buyer/home.js"></script>
+</body>
+</html>
