@@ -200,26 +200,28 @@ body:not(.public-body) button > svg {
   min-width: 0;
 }
 
-.sidebar-brand-img {
-  height: 28px;
-  width: auto;
-  max-width: 170px;
-  object-fit: contain;
-  display: block;
+.sidebar-brand-title {
+  color: var(--t-base);
+  font-family: 'Inter Tight', 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
-.sidebar-brand-favicon {
-  height: 30px;
-  width: 30px;
-  object-fit: contain;
+.sidebar-brand-short {
+  display: none;
+  color: var(--primary);
+  font-family: 'Inter Tight', 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.app-shell.sidebar-collapsed .sidebar-brand-title {
   display: none;
 }
 
-.app-shell.sidebar-collapsed .sidebar-brand-img {
-  display: none;
-}
-
-.app-shell.sidebar-collapsed .sidebar-brand-favicon {
+.app-shell.sidebar-collapsed .sidebar-brand-short {
   display: block;
 }
 
