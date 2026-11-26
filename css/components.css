@@ -193,6 +193,115 @@
   outline-offset: 1px;
 }
 
+/* Header User Dropdown Menu */
+.user-dropdown-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.user-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.user-dropdown-toggle .user-dropdown-name {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: var(--color-surface, #ffffff);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
+  padding: 6px;
+  z-index: 100;
+  display: none;
+  animation: dropdownFadeIn 0.15s ease-out;
+}
+
+.user-dropdown-wrap.is-open .user-dropdown-menu {
+  display: block;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-dropdown-header {
+  padding: 8px 10px 10px;
+}
+
+.user-dropdown-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-text, #0f172a);
+  line-height: 1.25;
+}
+
+.user-dropdown-email {
+  font-size: 0.76rem;
+  color: var(--color-text-muted, #64748b);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-dropdown-divider {
+  height: 1px;
+  background: var(--color-border, #e2e8f0);
+  margin: 4px 0;
+}
+
+.user-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: var(--radius-md, 8px);
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--color-text, #1e293b);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.user-dropdown-item:hover {
+  background: var(--color-surface-alt, #f1f5f9);
+  color: var(--color-primary, #0284c7);
+}
+
+.user-dropdown-item.user-dropdown-logout {
+  color: var(--color-error, #dc2626);
+}
+
+.user-dropdown-item.user-dropdown-logout:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
 .form-error {
   font-size: 0.78rem;
   color: var(--color-error);
