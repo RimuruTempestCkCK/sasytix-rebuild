@@ -100,6 +100,34 @@
   font-size: 1.15rem;
   color: var(--color-primary);
   letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.brand-logo-img {
+  height: 40px;
+  width: auto;
+  max-width: 185px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover .brand-logo-img {
+  transform: scale(1.02);
+}
+
+.brand-logo-img--footer {
+  height: 44px;
+  max-width: 200px;
+}
+
+.brand-logo-favicon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .brand-logo-mark {

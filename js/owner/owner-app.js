@@ -35,73 +35,187 @@
     const paySuccessRate = totalBookings ? Math.round((verifiedCount / totalBookings) * 100) : 0;
     const cancelRate = totalBookings ? Math.round((cancelledCount / totalBookings) * 100) : 0;
     const maxRev = Math.max(...st.monthlyTrend.map(m => m.revenueM), 1);
+    const { icon } = window.SasyTix.Icons;
+
+    const months = st.monthlyTrend.map(m => m.month);
+    const revData = st.monthlyTrend.map(m => m.revenueM);
+    // Target budget comparison
+    const targetData = [150, 185, 210, 220, 240, 265];
+
+    const lineChartHtml = UI.renderLineChart({
+      id: 'owner-revenue-line-chart',
+      labels: months,
+      series: [
+        { name: 'Realisasi Revenue', data: revData, color: '#10B981', unit: ' Jt IDR', showArea: true },
+        { name: 'Target Anggaran', data: targetData, color: '#F59E0B', unit: ' Jt IDR', dashed: true, showArea: false }
+      ],
+      height: 230,
+      formatValue: (v) => 'Rp' + v + 'M'
+    });
 
     root.innerHTML = `
       <div class="exec-banner">
         <div>
-          <span class="text-xs" style="opacity:0.8; text-transform:uppercase; letter-spacing:0.08em;">Executive Summary · Simulasi Bisnis</span>
-          <h1 style="font-size:1.5rem; font-weight:800; margin-top:4px;">Performa Koridor Batam – Singapura – Malaysia</h1>
+          <div class="exec-banner-badge">${icon('shield', 14)} Executive Summary · Sasy.Tix Maritime Group</div>
+          <h1 style="font-size:1.5rem; font-weight:800; margin-top:6px; line-height:1.2;">Performa Koridor Batam – Singapura – Malaysia</h1>
+          <div class="exec-banner-stats">
+            <span class="exec-banner-stat-chip">${icon('trendingUp', 14)} Target Semester Tercapai 107.8%</span>
+            <span class="exec-banner-stat-chip">${icon('ship', 14)} 4 Koridor Pelayaran Internasional</span>
+            <span class="exec-banner-stat-chip">${icon('calendar', 14)} Periode: Semester II 2026</span>
+          </div>
         </div>
-        <a href="analytics.html" class="btn btn--accent btn--sm">Lihat Analitik Rute</a>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a href="analytics.html" class="btn btn--accent btn--sm">${icon('barChart', 14)} Analitik Rute</a>
+          <a href="financial.html" class="btn btn--outline btn--sm" style="background:rgba(255,255,255,0.14); color:#FFFFFF; border-color:rgba(255,255,255,0.3);">${icon('creditCard', 14)} Laporan Finansial</a>
+        </div>
       </div>
 
       <div class="kpi-grid">
         <div class="kpi-card">
-          <div class="kpi-label">Gross Revenue (Simulasi)</div>
-          <div class="kpi-value" style="font-size:1.35rem; color:var(--color-primary);">${UI.formatIDR(grossRev)}</div>
-          <div class="kpi-meta">+13.8% MoM (Nov vs Oct)</div>
+          <div>
+            <div class="kpi-header">
+              <span class="kpi-label">Gross Revenue (Simulasi)</span>
+              <span class="kpi-icon-badge kpi-icon-badge--teal">${icon('creditCard', 20)}</span>
+            </div>
+            <div class="kpi-value" style="font-size:1.35rem; color:var(--color-primary);">${UI.formatIDR(grossRev)}</div>
+          </div>
+          <div class="kpi-meta">
+            <span class="kpi-trend kpi-trend--up">${icon('trendingUp', 12)} +13.8% MoM</span>
+            <span>Pertumbuhan stabil</span>
+          </div>
         </div>
+
         <div class="kpi-card">
-          <div class="kpi-label">Total Booking &amp; Penumpang</div>
-          <div class="kpi-value">${totalBookings} <span class="text-sm text-muted">(${totalPax} pax)</span></div>
-          <div class="kpi-meta">Avg Ticket: ${UI.formatIDR(avgTicket)}</div>
+          <div>
+            <div class="kpi-header">
+              <span class="kpi-label">Total Booking &amp; Penumpang</span>
+              <span class="kpi-icon-badge kpi-icon-badge--blue">${icon('users', 20)}</span>
+            </div>
+            <div class="kpi-value">${totalBookings} <span class="text-sm text-muted" style="font-weight:500;">(${totalPax} pax)</span></div>
+          </div>
+          <div class="kpi-meta">
+            <span class="kpi-trend kpi-trend--neutral">${icon('ticket', 12)} Avg Ticket</span>
+            <span>${UI.formatIDR(avgTicket)} / booking</span>
+          </div>
         </div>
+
         <div class="kpi-card">
-          <div class="kpi-label">Payment Success Rate</div>
-          <div class="kpi-value" style="color:var(--color-success);">${paySuccessRate}%</div>
-          <div class="kpi-meta">${verifiedCount} dari ${totalBookings} transaksi verified</div>
+          <div>
+            <div class="kpi-header">
+              <span class="kpi-label">Payment Success Rate</span>
+              <span class="kpi-icon-badge kpi-icon-badge--green">${icon('checkCircle', 20)}</span>
+            </div>
+            <div class="kpi-value" style="color:var(--color-success);">${paySuccessRate}%</div>
+          </div>
+          <div class="kpi-meta">
+            <span class="kpi-trend kpi-trend--up">${icon('checkCircle', 12)} Optimal</span>
+            <span>${verifiedCount} dari ${totalBookings} transaksi</span>
+          </div>
         </div>
+
         <div class="kpi-card">
-          <div class="kpi-label">Cancellation Rate</div>
-          <div class="kpi-value" style="color:var(--color-error);">${cancelRate}%</div>
-          <div class="kpi-meta">${cancelledCount} booking dibatalkan/ditolak</div>
+          <div>
+            <div class="kpi-header">
+              <span class="kpi-label">Cancellation Rate</span>
+              <span class="kpi-icon-badge kpi-icon-badge--red">${icon('alertCircle', 20)}</span>
+            </div>
+            <div class="kpi-value" style="color:var(--color-error);">${cancelRate}%</div>
+          </div>
+          <div class="kpi-meta">
+            <span class="kpi-trend ${cancelRate > 20 ? 'kpi-trend--down' : 'kpi-trend--neutral'}">${icon('alertCircle', 12)} Terkendali</span>
+            <span>${cancelledCount} transaksi dibatalkan</span>
+          </div>
         </div>
       </div>
 
       <div class="dashboard-grid-2">
-        <div class="card">
-          <div class="card-header"><h2 class="card-title">Tren Revenue Bulanan (Juta IDR)</h2></div>
-          <div class="card-body">
-            <div class="chart-bars">
-              ${st.monthlyTrend.map(m => `
-                <div class="chart-bar-col">
-                  <div class="chart-bar chart-bar--teal" style="height:${Math.round((m.revenueM / maxRev) * 150)}px;" title="Rp${m.revenueM} Jt"></div>
-                  <span class="chart-bar-label">${m.month}</span>
-                </div>
-              `).join('')}
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title-wrap">
+              <h2 class="chart-title">Tren Revenue &amp; Realisasi Target Finansial</h2>
+              <span class="chart-subtitle">Pendapatan bulanan vs target anggaran (Juta IDR · H2 2026)</span>
+            </div>
+            <div class="chart-controls">
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-dot" style="background:#10B981;"></span> Realisasi Revenue</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#F59E0B;"></span> Target Anggaran</span>
+              </div>
+              <div class="chart-tab-group">
+                <button type="button" class="chart-tab-btn is-active" id="tab-owner-line">${icon('lineChart', 14)} Line</button>
+                <button type="button" class="chart-tab-btn" id="tab-owner-bar">${icon('barChart', 14)} Bar</button>
+              </div>
+            </div>
+          </div>
+          <div class="chart-body" style="padding:0;">
+            <div id="owner-chart-line-view">
+              ${lineChartHtml}
+            </div>
+            <div id="owner-chart-bar-view" style="display:none;">
+              <div class="chart-bars">
+                ${st.monthlyTrend.map(m => `
+                  <div class="chart-bar-col">
+                    <div class="chart-bar chart-bar--teal" style="height:${Math.round((m.revenueM / maxRev) * 160)}px;" title="Rp${m.revenueM} Jt"></div>
+                    <span class="chart-bar-label">${m.month}</span>
+                  </div>
+                `).join('')}
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-header"><h2 class="card-title">Executive Business Insights</h2></div>
-          <div class="card-body insight-list">
+        <div class="card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 14px rgba(11,37,60,0.02);">
+          <div class="card-header" style="background:#FAFCFE; border-bottom:1px solid var(--color-border); padding:var(--space-5) var(--space-6);">
+            <div>
+              <h2 class="card-title" style="font-size:1.0625rem;">Executive Business Insights</h2>
+              <div class="text-xs text-muted" style="margin-top:2px;">Analisis Strategis &amp; Tren Pertumbuhan</div>
+            </div>
+            <span class="badge badge--primary">Q4 2026</span>
+          </div>
+          <div class="card-body insight-list" style="padding:var(--space-5) var(--space-6);">
             <div class="insight-item">
-              <strong class="text-sm">Koridor Batam–Singapura Mendominasi</strong>
-              <p class="text-xs text-muted" style="margin-top:4px;">Pelayaran Batam Centre ↔ HarbourFront menyumbang okupansi tertinggi pada jam pagi (07:00–10:00).</p>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <strong class="text-sm" style="color:var(--color-primary);">Koridor Batam–Singapura Mendominasi</strong>
+                <span class="badge badge--success" style="font-size:0.7rem;">+22% Okupansi</span>
+              </div>
+              <p class="text-xs text-muted">Pelayaran Batam Centre ↔ HarbourFront menyumbang okupansi tertinggi pada jam pagi (07:00–10:00).</p>
             </div>
             <div class="insight-item">
-              <strong class="text-sm">Peluang Pertumbuhan Batam–Malaysia</strong>
-              <p class="text-xs text-muted" style="margin-top:4px;">Rute Harbour Bay → Puteri Harbour menunjukkan rata-rata ukuran grup lebih besar (2+ pax per booking).</p>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <strong class="text-sm" style="color:var(--color-primary);">Peluang Pertumbuhan Batam–Malaysia</strong>
+                <span class="badge badge--info" style="font-size:0.7rem;">Grup Besar</span>
+              </div>
+              <p class="text-xs text-muted">Rute Harbour Bay → Puteri Harbour menunjukkan rata-rata ukuran grup lebih besar (2+ pax per booking).</p>
             </div>
             <div class="insight-item">
-              <strong class="text-sm">Preferensi Pembayaran Digital</strong>
-              <p class="text-xs text-muted" style="margin-top:4px;">QRIS dan Virtual Account mendominasi metode checkout dibanding transfer manual.</p>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <strong class="text-sm" style="color:var(--color-primary);">Preferensi Pembayaran Digital</strong>
+                <span class="badge badge--warning" style="font-size:0.7rem;">78% Non-Tunai</span>
+              </div>
+              <p class="text-xs text-muted">QRIS dan Virtual Account mendominasi metode checkout dibanding transfer manual.</p>
             </div>
           </div>
         </div>
       </div>
     `;
+
+    const tabLine = document.getElementById('tab-owner-line');
+    const tabBar = document.getElementById('tab-owner-bar');
+    const viewLine = document.getElementById('owner-chart-line-view');
+    const viewBar = document.getElementById('owner-chart-bar-view');
+    if (tabLine && tabBar && viewLine && viewBar) {
+      tabLine.addEventListener('click', () => {
+        tabLine.classList.add('is-active');
+        tabBar.classList.remove('is-active');
+        viewLine.style.display = 'block';
+        viewBar.style.display = 'none';
+      });
+      tabBar.addEventListener('click', () => {
+        tabBar.classList.add('is-active');
+        tabLine.classList.remove('is-active');
+        viewLine.style.display = 'none';
+        viewBar.style.display = 'block';
+      });
+    }
   }
 
   function renderAnalytics(root) {
